@@ -35,7 +35,7 @@ public class LoginView extends VerticalLayout implements View {
     }
 
     private void setUp() {
-        ThemeResource themeResource = new ThemeResource("images/logo_hd_3.png");
+        ThemeResource themeResource = new ThemeResource("images/corporate.png");
         Image logo = new Image(null, themeResource);
         logo.setWidth("750px");
         logo.addStyleName("logo");

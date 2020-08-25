@@ -83,22 +83,6 @@ public class UserDAO extends AbstractDAO<User> implements DAOInterface<User> {
     }
 
     @Override
-    public User update(User user) throws DatabaseException {
-        //language=PostgreSQL
-        final String updateQuery = "UPDATE \"CarSearch24\".user " +
-                "SET (email, password, \"firstName\", \"lastName\") = " +
-                "('" + user.getEmail() + "', '" + user.getPassword() + "', '" + user.getFirstName() + "', '" + user.getLastName() + "') " +
-                "WHERE \"userID\" = " + user.getUserID() + " " +
-                "RETURNING *;";
-
-        List<User> result = execute(updateQuery);
-        if (result.size() < 1) {
-            throw new DatabaseException("[" + UserDAO.class.toString() + "] updateOne() did not return a DTO");
-        }
-        return result.get(0);
-    }
-
-    @Override
     public User delete(User user) throws DatabaseException {
         //language=PostgreSQL
         final String deleteQuery =

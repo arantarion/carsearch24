@@ -28,7 +28,7 @@ public class SearchControl implements SearchControlInterface {
 
 
     public List<Car> filterCars(String searchTerm) throws DatabaseException {
-        List<Car> cars = new CarDAO().getAll();
+        List<Car> cars = new CarDAO().retrieveAll();
         List<Car> filtered = new ArrayList<>();
         cars.stream()
                 .filter(car -> car.getBrand().toLowerCase().contains(searchTerm.toLowerCase()))
@@ -37,7 +37,7 @@ public class SearchControl implements SearchControlInterface {
     }
 
     public List<Car> liveFilterCombobox(String searchTerm) throws DatabaseException {
-        List<Car> cars = new CarDAO().getAll();
+        List<Car> cars = new CarDAO().retrieveAll();
         List<Car> filtered = new ArrayList<>();
         cars.stream()
                 .filter(car -> car.getBrand().toLowerCase().contains(searchTerm.toLowerCase()))

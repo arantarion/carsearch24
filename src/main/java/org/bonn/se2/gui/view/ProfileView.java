@@ -68,7 +68,7 @@ public class ProfileView extends VerticalLayout implements View {
         layout.addComponent(navigationBar, 0, 0);
         layout.setComponentAlignment(navigationBar, Alignment.TOP_CENTER);
 
-        if (SessionFunctions.getCurrentRole().equals(Config.Roles.CUSTOMER) && ProfileView.getMyProfile()) {
+        if (SessionFunctions.getCurrentRole().equals(Config.Roles.CUSTOMER)) {
             //TODO
         } else {
             //TODO

@@ -233,7 +233,7 @@ public class RegisterView extends VerticalLayout implements View {
 
 
     public void createHeader() {
-        ThemeResource themeResource = new ThemeResource("images/logo_hd_3.png"); //TODO
+        ThemeResource themeResource = new ThemeResource("images/corporate.png"); //TODO
         Image logo = new Image(null, themeResource);
         logo.setWidth("750px");
         logo.addStyleName("logo");
@@ -243,8 +243,7 @@ public class RegisterView extends VerticalLayout implements View {
 
         Label platzhalterLabel = new Label("&nbsp", ContentMode.HTML);
 
-        Label labelText = new Label("Willkommen auf Coll@Aldernativ! Der zentralen Schnittstelle zwischen Studenten & Unternehmen."
-                + " Hier findet jeder seinen Traumjob.");
+        Label labelText = new Label("Willkommen bei CarSearch24! Finden Sie noch heute ein neues Auto.");
 
         this.addComponent(logo);
         this.addComponent(labelText);

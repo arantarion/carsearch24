@@ -10,6 +10,10 @@ public class Salesman extends User implements Serializable {
         super(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
     }
 
+    public Salesman() {
+
+    }
+
     public Integer getSalesmanID() {
         return salesmanID;
     }
