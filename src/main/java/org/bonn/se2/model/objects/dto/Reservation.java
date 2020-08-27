@@ -11,6 +11,16 @@ public class Reservation implements Serializable {
     private Integer CustomID;
 
     @Override
+    public String toString() {
+        return "Reservation{" +
+                "reservationID=" + reservationID +
+                ", resDate=" + resDate +
+                ", CarID=" + CarID +
+                ", CustomID=" + CustomID +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
