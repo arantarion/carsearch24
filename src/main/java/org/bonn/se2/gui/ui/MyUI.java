@@ -54,7 +54,7 @@ public class MyUI extends UI {
         return (MyUI) UI.getCurrent();
     }
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+    @WebServlet(urlPatterns = "/*", name = "CarSearch24", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
     }
