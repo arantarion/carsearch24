@@ -70,7 +70,7 @@ public class RegisterView extends VerticalLayout implements View {
 
         Button customerButton = new Button("Kunde");
         Button salesmanButton = new Button("Vertriebler");
-        Button backButton = new Button("Zurück", VaadinIcons.ARROW_CIRCLE_LEFT);
+        Button backButton = new Button("Zurück", VaadinIcons.ARROW_LEFT);
 
         prevButtonLayout.addComponent(backButton);
         prevButtonLayout.setComponentAlignment(backButton, Alignment.MIDDLE_CENTER);
