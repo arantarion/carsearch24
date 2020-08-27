@@ -92,7 +92,7 @@ public class SearchView extends MainView implements View {
             if (allCars) title = "All Cars";
             reloadResults(currentResults, title);
         } else {
-            HorizontalLayout noResultsLayout = Util.createNoResultsWarning("Zu der angegebenen Suche konnten leider keine Stellen gefunden werden!");
+            HorizontalLayout noResultsLayout = Util.createNoResultsWarning("Zu der angegebenen Suche konnten leider keine Autos gefunden werden!");
             layout.addComponent(noResultsLayout);
 
         }

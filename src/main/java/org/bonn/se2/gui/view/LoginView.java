@@ -20,7 +20,6 @@ import org.bonn.se2.services.util.Config;
 import org.bonn.se2.services.util.UIFunctions;
 
 
-
 public class LoginView extends VerticalLayout implements View {
 
     @Override

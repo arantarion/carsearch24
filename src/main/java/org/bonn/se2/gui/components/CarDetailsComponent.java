@@ -4,16 +4,13 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se2.model.objects.dto.Car;
-import org.bonn.se2.process.control.exceptions.DatabaseException;
-import org.omg.CORBA.UserException;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CarDetailsComponent extends VerticalLayout {
 
-    public CarDetailsComponent(Car vDTO) throws SQLException, DatabaseException, UserException {
+    public CarDetailsComponent(Car vDTO)  {
         this.setSizeFull();
         this.setSpacing(true);
         this.addStyleName("vacancy-components");
