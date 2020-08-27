@@ -19,6 +19,7 @@ import org.bonn.se2.model.objects.dto.Customer;
 import org.bonn.se2.model.objects.dto.Salesman;
 import org.bonn.se2.model.objects.dto.User;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
+import org.bonn.se2.services.util.CustomEmailValidator;
 import org.bonn.se2.services.util.PasswordValidator;
 import org.bonn.se2.services.util.SessionFunctions;
 import org.bonn.se2.services.util.UIFunctions;
@@ -132,8 +133,13 @@ public class RegisterView extends VerticalLayout implements View {
         lastNameField.setSizeFull();
 
         TextField emailField = new TextField("E-Mail Adresse");
-        userBinder.forField(emailField).asRequired(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
-                .bind(User::getEmail, User::setEmail);
+        if (isCustomer) {
+            userBinder.forField(emailField).asRequired(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
+                    .bind(User::getEmail, User::setEmail);
+        } else {
+            userBinder.forField(emailField).asRequired(new CustomEmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
+                    .bind(User::getEmail, User::setEmail);
+        }
         emailField.setSizeFull();
 
         PasswordField passwordField = new PasswordField("Passwort");

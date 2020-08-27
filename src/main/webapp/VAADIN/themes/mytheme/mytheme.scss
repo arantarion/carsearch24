@@ -29,10 +29,21 @@
 // For more information, see: https://vaadin.com/book/-/page/themes.valo.html
 // Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples
 
+$v-app-loading-text: "CarSearch24";
+$v-background-color: #e3eeff;
+$v-app-background-color: #a7b6ff;
+$v-focus-color: #c3caff; //a8b3ff
+$v-font-color: #32373a;
+$mat-custom-color: #fff;
+
 @import "../valo/valo.scss";
 
 @mixin mytheme {
   @include valo;
+
+  .v-image-logo {
+    cursor: pointer;
+  }
 
   // Insert your own theme rules here
 }
