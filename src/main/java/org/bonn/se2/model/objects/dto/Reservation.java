@@ -15,4 +15,20 @@ public class Reservation implements Serializable {
         CarID = carID;
         CustomID = customID;
     }
+
+    public Integer getReservationID() {
+        return reservationID;
+    }
+
+    public LocalDate getResDate() {
+        return resDate;
+    }
+
+    public Integer getCarID() {
+        return CarID;
+    }
+
+    public Integer getCustomID() {
+        return CustomID;
+    }
 }
