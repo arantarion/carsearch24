@@ -2,12 +2,29 @@ package org.bonn.se2.model.objects.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Reservation implements Serializable {
     private Integer reservationID;
     private LocalDate resDate;
     private Integer CarID;
     private Integer CustomID;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return reservationID.equals(that.reservationID) &&
+                Objects.equals(resDate, that.resDate) &&
+                Objects.equals(CarID, that.CarID) &&
+                Objects.equals(CustomID, that.CustomID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reservationID, resDate, CarID, CustomID);
+    }
 
     public Reservation(Integer reservationID, LocalDate resDate, Integer carID, Integer customID) {
         this.reservationID = reservationID;
