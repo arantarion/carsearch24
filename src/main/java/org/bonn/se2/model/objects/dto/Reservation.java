@@ -16,6 +16,22 @@ public class Reservation implements Serializable {
         CustomID = customID;
     }
 
+    public void setReservationID(Integer reservationID) {
+        this.reservationID = reservationID;
+    }
+
+    public void setResDate(LocalDate resDate) {
+        this.resDate = resDate;
+    }
+
+    public void setCarID(Integer carID) {
+        CarID = carID;
+    }
+
+    public void setCustomID(Integer customID) {
+        CustomID = customID;
+    }
+
     public Integer getReservationID() {
         return reservationID;
     }
