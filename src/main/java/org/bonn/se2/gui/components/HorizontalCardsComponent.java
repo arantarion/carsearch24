@@ -45,7 +45,7 @@ public class HorizontalCardsComponent extends HorizontalLayout {
                 CarResultComponent.detailsLayout.addComponent(CarResultComponent.createDetailsCard(dto));
 
             } catch (Exception e) {
-                new Notifier().createErrorNotification("Die Details der Stellenausschreibung konnten nicht gefunden werden. Bitte kontaktieren Sie den Administrator.")
+                new Notifier().createErrorNotification("Die Details der Autos konnten nicht gefunden werden. Bitte kontaktieren Sie den Administrator.")
                         .at(Position.TOP_CENTER)
                         .show();
                 e.printStackTrace();

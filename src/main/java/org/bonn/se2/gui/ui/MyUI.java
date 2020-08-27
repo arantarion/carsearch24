@@ -45,7 +45,6 @@ public class MyUI extends UI {
         navi.addView(Config.Views.LOGIN, LoginView.class);
         navi.addView(Config.Views.REGISTRATION, RegisterView.class);
         navi.addView(Config.Views.PROFILE, ProfileView.class);
-        //navi.addView(Config.Views.MANAGEMENT, KontoverwaltungView.class);
 
         UI.getCurrent().getNavigator().navigateTo(Config.Views.LOGIN);
     }
