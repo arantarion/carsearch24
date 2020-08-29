@@ -38,7 +38,7 @@ public class MainView extends VerticalLayout implements View {
         HorizontalLayout h2 = new HorizontalLayout();
 
         Button suche = new Button("Suchen", VaadinIcons.SEARCH);
-        Button carCreation = new Button("Auto erstellen");
+        Button carCreation = new Button("Auto erstellen", VaadinIcons.CAR);
         TextField name = new TextField();
         Label label = new Label("Bitte geben Sie ein Stichwort ein:");
 
