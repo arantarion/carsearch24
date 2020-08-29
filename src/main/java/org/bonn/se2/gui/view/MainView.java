@@ -6,6 +6,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se2.gui.components.NavigationBar;
+import org.bonn.se2.gui.windows.CarCreationWindow;
 import org.bonn.se2.services.util.Config;
 import org.bonn.se2.services.util.SessionFunctions;
 
@@ -37,6 +38,7 @@ public class MainView extends VerticalLayout implements View {
         HorizontalLayout h2 = new HorizontalLayout();
 
         Button suche = new Button("Suchen", VaadinIcons.SEARCH);
+        Button carCreation = new Button("Auto erstellen");
         TextField name = new TextField();
         Label label = new Label("Bitte geben Sie ein Stichwort ein:");
 
@@ -56,11 +58,17 @@ public class MainView extends VerticalLayout implements View {
         horizontalLayoutCompany.addComponent(name);
         horizontalLayoutCompany.addComponent(new Label("&nbsp", ContentMode.HTML)); // Label erstellt, um textfeld und Button zu trennen (Abstand größer ist)
         horizontalLayoutCompany.addComponent(suche);
-        System.out.println(SessionFunctions.getCurrentRole());
         if(SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)){
-            Button carCreation = new Button("Auto erstellen");
             horizontalLayoutCompany.addComponent(carCreation);
         }
+        carCreation.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                Window create = new CarCreationWindow();
+                UI.getCurrent().addWindow(create);
+            }
+        });
+
 
     }
 
