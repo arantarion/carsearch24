@@ -56,6 +56,11 @@ public class MainView extends VerticalLayout implements View {
         horizontalLayoutCompany.addComponent(name);
         horizontalLayoutCompany.addComponent(new Label("&nbsp", ContentMode.HTML)); // Label erstellt, um textfeld und Button zu trennen (Abstand größer ist)
         horizontalLayoutCompany.addComponent(suche);
+        System.out.println(SessionFunctions.getCurrentRole());
+        if(SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)){
+            Button carCreation = new Button("Auto erstellen");
+            horizontalLayoutCompany.addComponent(carCreation);
+        }
 
     }
 
