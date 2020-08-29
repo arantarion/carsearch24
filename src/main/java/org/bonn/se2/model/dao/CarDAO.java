@@ -52,15 +52,15 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car>{
     @Override
     public Car create(Car car) throws DatabaseException, SQLException {
         //language=PostgreSQL
-        final String insertQuery2 = "INSERT INTO \"CarSearch24\".car ( \"carID\", brand, model, buildyear, color, price, description, \"creationDate\") " +
-                "VALUES ('" + car.getCarID() +
-                "','" + car.getBrand() +
+        final String insertQuery2 = "INSERT INTO \"CarSearch24\".car ( brand, model, buildyear, color, price, description, \"creationDate\", \"salesmanID\") " +
+                "VALUES ('" + car.getBrand() +
                 "', '" + car.getModel() +
                 "', '" + car.getBuildYear() +
                 "', '" + car.getColor() +
                 "', '" + car.getPrice() +
                 "', '" + car.getDescription() +
                 "', '" + LocalDate.now() +
+                "', '" + car.getSalesmanID() +
                 "') " +
                 "RETURNING *";
         PreparedStatement pst = this.getPreparedStatement(insertQuery2);
@@ -75,6 +75,7 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car>{
             offer.setPrice(resultSet.getString("price"));
             offer.setPrice(resultSet.getString("description"));
             offer.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate());
+            offer.setSalesmanID(resultSet.getInt("salesmanID"));
             Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Cars-Objekt: " + offer + "wurde erfolgreich gespeichert.");
             return offer;
         } else {
@@ -95,6 +96,7 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car>{
             dto.setPrice(resultSet.getString("price"));
             dto.setPrice(resultSet.getString("description"));
             dto.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate());
+            dto.setSalesmanID(resultSet.getInt("salesmanID"));
             Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Cars-Objekt: " + dto + "wurde erfolgreich gespeichert.");
         } catch (SQLException e) {
             Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "create(ResultSet resultSet) in CarsDAO failed", e);
