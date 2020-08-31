@@ -1,7 +1,6 @@
 package org.bonn.se2.model.dao;
 
 import org.bonn.se2.model.objects.dto.Car;
-import org.bonn.se2.model.objects.dto.Salesman;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
 import org.bonn.se2.process.control.exceptions.DontUseException;
 import org.bonn.se2.process.control.exceptions.InvalidCredentialsException;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car>{
+public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
 
     public CarDAO() throws DatabaseException {
     }
@@ -40,6 +39,41 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car>{
     @Override
     public Car retrieve(String attribute) throws DontUseException {
         throw new DontUseException();
+    }
+
+
+    public List<Car> retrieveCar(String attribute) throws DatabaseException, SQLException {
+        Statement statement = this.getStatement();
+        ResultSet resultSet;
+
+        //language=PostgreSQL
+        final String insert = "SELECT * " +
+                "FROM \"CarSearch24\".car " +
+                "WHERE model LIKE '%" + attribute + "%' OR brand LIKE '%" + attribute + "%' OR buildyear LIKE '%" + attribute + "%' " +
+                "OR color LIKE '%'";
+        resultSet = statement.executeQuery(insert);
+        List<Car> liste = new ArrayList<>();
+        Car dto = null;
+
+        try {
+            while (resultSet.next()) {
+                dto = new Car();
+                dto.setModel(resultSet.getString("model"));
+                dto.setBrand(resultSet.getString("brand"));
+                dto.setDescription(resultSet.getString("description"));
+                dto.setCarID(resultSet.getInt("carID"));
+                dto.setPrice(resultSet.getString("price"));
+                dto.setColor(resultSet.getString("color"));
+                dto.setSalesmanID(resultSet.getInt("salesmanID"));
+                dto.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate()); //creationDate
+                dto.setBuildYear(Integer.parseInt(resultSet.getString("buildyear")));
+                liste.add(dto);
+            }
+            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Alle offer mit Attribut: " + attribute + " wurden abgerufen");
+        } catch (SQLException e) {
+            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "retrieveCompanyOffers(int id) in JobOfferDAO failed", e);
+        }
+        return liste;
     }
 
     @Override
@@ -76,10 +110,10 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car>{
             offer.setPrice(resultSet.getString("description"));
             offer.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate());
             offer.setSalesmanID(resultSet.getInt("salesmanID"));
-            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Cars-Objekt: " + offer + "wurde erfolgreich gespeichert.");
+            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Cars-Objekt: " + offer + " wurde erfolgreich gespeichert.");
             return offer;
         } else {
-            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "Cars-Objekt: " + car + "konnte nicht richtig gespeichert werden.");
+            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "Cars-Objekt: " + car + " konnte nicht richtig gespeichert werden.");
             return null;
         }
     }
@@ -97,13 +131,13 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car>{
             dto.setPrice(resultSet.getString("description"));
             dto.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate());
             dto.setSalesmanID(resultSet.getInt("salesmanID"));
-            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Cars-Objekt: " + dto + "wurde erfolgreich gespeichert.");
+            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Cars-Objekt: " + dto + " wurde erfolgreich gespeichert.");
         } catch (SQLException e) {
             Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "create(ResultSet resultSet) in CarsDAO failed", e);
         }
         return dto;
     }
-    
+
     @Override
     public Car delete(Car car) throws DatabaseException {
 

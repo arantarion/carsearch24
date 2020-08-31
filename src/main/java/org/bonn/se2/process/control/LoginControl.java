@@ -4,7 +4,6 @@ import com.vaadin.ui.UI;
 import org.bonn.se2.model.dao.CustomerDAO;
 import org.bonn.se2.model.dao.SalesmanDAO;
 import org.bonn.se2.model.dao.UserDAO;
-import org.bonn.se2.model.objects.dto.Salesman;
 import org.bonn.se2.model.objects.dto.User;
 import org.bonn.se2.model.objects.dto.UserAtLogin;
 import org.bonn.se2.process.control.exceptions.DatabaseException;

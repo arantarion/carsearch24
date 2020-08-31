@@ -10,6 +10,13 @@ public class Reservation implements Serializable {
     private Integer CarID;
     private Integer CustomID;
 
+    public Reservation(Integer reservationID, LocalDate resDate, Integer carID, Integer customID) {
+        this.reservationID = reservationID;
+        this.resDate = resDate;
+        CarID = carID;
+        CustomID = customID;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +
@@ -36,42 +43,35 @@ public class Reservation implements Serializable {
         return Objects.hash(reservationID, resDate, CarID, CustomID);
     }
 
-    public Reservation(Integer reservationID, LocalDate resDate, Integer carID, Integer customID) {
-        this.reservationID = reservationID;
-        this.resDate = resDate;
-        CarID = carID;
-        CustomID = customID;
+    public Integer getReservationID() {
+        return reservationID;
     }
 
     public void setReservationID(Integer reservationID) {
         this.reservationID = reservationID;
     }
 
-    public void setResDate(LocalDate resDate) {
-        this.resDate = resDate;
-    }
-
-    public void setCarID(Integer carID) {
-        CarID = carID;
-    }
-
-    public void setCustomID(Integer customID) {
-        CustomID = customID;
-    }
-
-    public Integer getReservationID() {
-        return reservationID;
-    }
-
     public LocalDate getResDate() {
         return resDate;
+    }
+
+    public void setResDate(LocalDate resDate) {
+        this.resDate = resDate;
     }
 
     public Integer getCarID() {
         return CarID;
     }
 
+    public void setCarID(Integer carID) {
+        CarID = carID;
+    }
+
     public Integer getCustomID() {
         return CustomID;
+    }
+
+    public void setCustomID(Integer customID) {
+        CustomID = customID;
     }
 }

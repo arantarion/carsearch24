@@ -1,5 +1,7 @@
 package org.bonn.se2.model.objects.dto;
 
+import org.bonn.se2.services.util.Util;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -43,11 +45,17 @@ public class Car implements Serializable {
     }
 
 
-    public Integer getSalesmanID() {return salesmanID;}
+    public Integer getSalesmanID() {
+        return salesmanID;
+    }
 
-    public void setSalesmanID(Integer salesmanID) { this.salesmanID = salesmanID;}
+    public void setSalesmanID(Integer salesmanID) {
+        this.salesmanID = salesmanID;
+    }
 
-    public Integer getCarID() {return carID; }
+    public Integer getCarID() {
+        return carID;
+    }
 
     public void setCarID(Integer carID) {
         this.carID = carID;
@@ -111,17 +119,7 @@ public class Car implements Serializable {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "carID=" + carID +
-                ", build year=" + buildYear +
-                ", price=" + price +
-                ", brand='" + brand + '\'' +
-                ", description='" + description + '\'' +
-                ", color='" + color + '\'' +
-                ", model='" + model + '\'' +
-                ", creationDate=" + creationDate + '\'' +
-                ", salesmanID=" + salesmanID +
-                '}';
+        return brand + " " + model;
     }
 
     @Override
@@ -142,5 +140,14 @@ public class Car implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getCarID(), getBuildYear(), getPrice(), getBrand(), getDescription(), getColor(), getModel(), getCreationDate());
+    }
+
+    public boolean contains(String query) {
+
+        if (Util.isInteger(query)) {
+            return this.getBuildYear() == Integer.parseInt(query);
+        }
+
+        return this.getModel().contains(query) | this.getBrand().contains(query);
     }
 }
