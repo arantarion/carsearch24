@@ -42,10 +42,10 @@ public class MainView extends VerticalLayout implements View {
         TextField name = new TextField();
         Label label = new Label("Bitte geben Sie ein Stichwort ein:");
 
-        Label labelText = new Label("Willkommen auf CarSearch24! Finden Sie noch heute ein neues Auto.");
+        //Label labelText = new Label("Willkommen auf CarSearch24! Finden Sie noch heute ein neues Auto.");
 
-        addComponent(labelText);
-        setComponentAlignment(labelText, Alignment.MIDDLE_CENTER);
+        //addComponent(labelText);
+        //setComponentAlignment(labelText, Alignment.MIDDLE_CENTER);
         addComponent(horizontalLayout);
         setComponentAlignment(horizontalLayout, Alignment.TOP_RIGHT);
 
