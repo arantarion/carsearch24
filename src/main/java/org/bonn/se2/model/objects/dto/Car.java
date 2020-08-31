@@ -14,11 +14,13 @@ public class Car implements Serializable {
     private String color;
     private String model;
     private LocalDate creationDate;
+    private Integer salesmanID;
 
     public Car() {
     }
 
-    public Car(Integer carID, Integer buildYear, String price, String brand, String description, String color, String model, LocalDate creationDate) {
+
+    public Car(Integer carID, Integer buildYear, String price, String brand, String description, String color, String model, LocalDate creationDate, Integer salesmanID) {
         this.carID = carID;
         this.buildYear = buildYear;
         this.price = price;
@@ -27,11 +29,25 @@ public class Car implements Serializable {
         this.color = color;
         this.model = model;
         this.creationDate = creationDate;
+        this.salesmanID = salesmanID;
     }
 
-    public Integer getCarID() {
-        return carID;
+    public Car(Integer buildYear, String price, String brand, String description, String color, String model, Integer salesmanID) {
+        this.buildYear = buildYear;
+        this.price = price;
+        this.brand = brand;
+        this.description = description;
+        this.color = color;
+        this.model = model;
+        this.salesmanID = salesmanID;
     }
+
+
+    public Integer getSalesmanID() {return salesmanID;}
+
+    public void setSalesmanID(Integer salesmanID) { this.salesmanID = salesmanID;}
+
+    public Integer getCarID() {return carID; }
 
     public void setCarID(Integer carID) {
         this.carID = carID;
@@ -103,7 +119,8 @@ public class Car implements Serializable {
                 ", description='" + description + '\'' +
                 ", color='" + color + '\'' +
                 ", model='" + model + '\'' +
-                ", creationDate=" + creationDate +
+                ", creationDate=" + creationDate + '\'' +
+                ", salesmanID=" + salesmanID +
                 '}';
     }
 
