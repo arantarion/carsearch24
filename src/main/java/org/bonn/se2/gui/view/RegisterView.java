@@ -67,8 +67,8 @@ public class RegisterView extends VerticalLayout implements View {
         auswahlPanel.setContent(content);
         buttonLayout.setSizeFull();
 
-        Button customerButton = new Button("Kunde");
-        Button salesmanButton = new Button("Vertriebler");
+        Button customerButton = new Button("Kunde"); //maybe with arrows??
+        Button salesmanButton = new Button("Vertriebler"); //maybe with arrows??
         Button backButton = new Button("Zurück", VaadinIcons.ARROW_LEFT);
 
         prevButtonLayout.addComponent(backButton);
@@ -139,7 +139,7 @@ public class RegisterView extends VerticalLayout implements View {
         } else {
 
             userBinder.forField(emailField)
-                    .withValidator(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
+                    .asRequired(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
                     .withValidator(email -> email.endsWith("@carsearch24.de"), "Es muss sich um eine Company-Email handeln")
                     .bind(User::getEmail, User::setEmail);
 //            userBinder.forField(emailField).asRequired(new CustomEmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))

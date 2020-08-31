@@ -30,11 +30,8 @@
 // Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples
 
 $v-app-loading-text: "CarSearch24";
-$v-background-color: #e3eeff; //#78C8EF;
-//$v-app-background-color: #a7b6ff;
-$v-focus-color: #78C8EF; //#c3caff; //a8b3ff
-$v-font-color: #32373a;
 $mat-custom-color: #fff;
+$v-font-color: #32373a;
 
 @import "../valo/valo.scss";
 
@@ -43,6 +40,29 @@ $mat-custom-color: #fff;
 
   .v-image-logo {
     cursor: pointer;
+  }
+
+  .v-caption-valid {
+    margin-left: 10px;
+  }
+  .v-caption-validation-message {
+    margin-left: 10px;
+    display: inline;
+  }
+  .v-label.validation-message {
+    color: red;
+    margin-left: 10px;
+  }
+  .valid .v-label.validation-message {
+    color: green;
+  }
+  .invalid .v-icon {
+    color: red;
+  }
+  .valid .v-icon {
+
+    color: green;
+
   }
 
   // Insert your own theme rules here

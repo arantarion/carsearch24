@@ -27,30 +27,32 @@ public class CarCreationWindow extends Window {
     }
 
     private void setUp() {
-        Label title = new Label("Füllen Sie bitte alle Felder aus.");
         VerticalLayout creationLayout = new VerticalLayout();
-        Button saveButton = new Button("Speichern");
-        saveButton.setSizeFull();
+
+        Label title = new Label("Füllen Sie bitte alle Felder aus.");
+
         TextField brand = new TextField("Marke");
-        brand.setSizeFull();
         TextField buildYear = new TextField("Baujahr");
-        buildYear.setSizeFull();
         TextArea description = new TextArea("Beschreibung");
-        description.setSizeFull();
         TextField color = new TextField("Farbe");
-        color.setSizeFull();
         TextField price = new TextField("Preis");
-        price.setSizeFull();
         TextField model = new TextField("Modell");
+
+        Button saveButton = new Button("Speichern");
+
+        brand.setSizeFull();
         model.setSizeFull();
+        buildYear.setSizeFull();
+        description.setSizeFull();
+        color.setSizeFull();
+        price.setSizeFull();
+        saveButton.setSizeFull();
 
         creationLayout.addComponents(title, brand, model, buildYear, color, description, price, saveButton);
 
         this.setContent(creationLayout);
         this.setWidth("17%");
         this.center();
-
-        Label nameStatus = new Label();
 
         carBinder.forField(buildYear)
                 .withConverter(new StringToIntegerConverter("Bitte geben Sie ein gültiges Jahr an!"))
@@ -59,17 +61,17 @@ public class CarCreationWindow extends Window {
 
 
         saveButton.addClickListener((Button.ClickListener) clickEvent -> {
-            String Marke = brand.getValue();
-            String Beschreibung = description.getValue();
-            String Farbe = color.getValue();
-            String Preis = price.getValue();
-            String Modell = model.getValue();
+            String marke = brand.getValue();
+            String beschreibung = description.getValue();
+            String farbe = color.getValue();
+            String preis = price.getValue();
+            String modell = model.getValue();
             Integer userID = SessionFunctions.getCurrentUser().getUserID();
             Integer salesmanID = null;
-            Integer Baujahr = null;
+            Integer baujahr = null;
 
             try {
-                Baujahr = Integer.parseInt(buildYear.getValue());
+                baujahr = Integer.parseInt(buildYear.getValue());
             } catch (NumberFormatException nve) {
                 Notification notification = new Notification("Kein gültiges Jahr.", Notification.Type.ERROR_MESSAGE);
                 notification.setPosition(Position.BOTTOM_CENTER);
@@ -87,7 +89,7 @@ public class CarCreationWindow extends Window {
                         new Throwable().getStackTrace()[0].getMethodName() + " failed", e);
             }
 
-            Car dto = new Car(Baujahr, Preis, Marke, Beschreibung, Farbe, Modell, salesmanID);
+            Car dto = new Car(baujahr, preis, marke, beschreibung, farbe, modell, salesmanID);
             try {
                 CarDAO carDao = new CarDAO();
                 carDao.create(dto);
