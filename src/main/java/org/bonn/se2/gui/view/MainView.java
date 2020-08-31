@@ -11,7 +11,6 @@ import org.bonn.se2.services.util.Config;
 import org.bonn.se2.services.util.SessionFunctions;
 
 
-
 public class MainView extends VerticalLayout implements View {
 
     @Override
@@ -42,10 +41,6 @@ public class MainView extends VerticalLayout implements View {
         TextField name = new TextField();
         Label label = new Label("Bitte geben Sie ein Stichwort ein:");
 
-        //Label labelText = new Label("Willkommen auf CarSearch24! Finden Sie noch heute ein neues Auto.");
-
-        //addComponent(labelText);
-        //setComponentAlignment(labelText, Alignment.MIDDLE_CENTER);
         addComponent(horizontalLayout);
         setComponentAlignment(horizontalLayout, Alignment.TOP_RIGHT);
 
@@ -56,20 +51,14 @@ public class MainView extends VerticalLayout implements View {
         setComponentAlignment(horizontalLayoutCompany, Alignment.MIDDLE_CENTER);
         horizontalLayoutCompany.addComponent(label);
         horizontalLayoutCompany.addComponent(name);
-        horizontalLayoutCompany.addComponent(new Label("&nbsp", ContentMode.HTML)); // Label erstellt, um textfeld und Button zu trennen (Abstand größer ist)
+        horizontalLayoutCompany.addComponent(new Label("&nbsp", ContentMode.HTML));
         horizontalLayoutCompany.addComponent(suche);
         if(SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)){
             horizontalLayoutCompany.addComponent(carCreation);
         }
-        carCreation.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                Window create = new CarCreationWindow();
-                UI.getCurrent().addWindow(create);
-            }
+        carCreation.addClickListener((Button.ClickListener) clickEvent -> {
+            Window create = new CarCreationWindow();
+            UI.getCurrent().addWindow(create);
         });
-
-
     }
-
 }
