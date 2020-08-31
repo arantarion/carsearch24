@@ -2,7 +2,6 @@ package org.bonn.se2.gui.windows;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToIntegerConverter;
-import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
 import com.vaadin.ui.*;
@@ -10,7 +9,6 @@ import org.bonn.se2.model.dao.CarDAO;
 import org.bonn.se2.model.dao.SalesmanDAO;
 import org.bonn.se2.model.objects.dto.Car;
 import org.bonn.se2.model.objects.dto.Salesman;
-import org.bonn.se2.model.objects.dto.User;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
 import org.bonn.se2.services.util.SessionFunctions;
 
