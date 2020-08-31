@@ -1,6 +1,5 @@
 package org.bonn.se2.model.dao;
 
-import org.bonn.se2.model.objects.dto.User;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
 import org.bonn.se2.process.control.exceptions.DontUseException;
 import org.bonn.se2.process.control.exceptions.InvalidCredentialsException;

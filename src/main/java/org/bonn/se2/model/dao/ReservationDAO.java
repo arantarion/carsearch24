@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInterface<Reservation>{
+public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInterface<Reservation> {
 
     public ReservationDAO() throws DatabaseException {
     }

@@ -2,8 +2,6 @@ package org.bonn.se2.services.util;
 
 import com.vaadin.ui.UI;
 
-import javax.security.auth.login.Configuration;
-
 public class UIFunctions {
 
     public static void gotoMain() {

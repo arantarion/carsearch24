@@ -151,5 +151,5 @@ public class SalesmanDAO extends AbstractDAO<Salesman> implements DAOInterface<S
         Logger.getLogger(SalesmanDAO.class.getName()).log(Level.SEVERE, "Salesman mit der ID: " + id + " wurde erfolgreich gelöscht.");
         return result.get(0);
     }
-    
+
 }

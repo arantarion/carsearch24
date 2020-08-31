@@ -38,4 +38,13 @@ public class Util {
 
     }
 
+    public static boolean isInteger(String str) {
+        try {
+            int tmp = Integer.parseInt(str);
+        } catch (NumberFormatException nve) {
+            return false;
+        }
+        return true;
+    }
+
 }
