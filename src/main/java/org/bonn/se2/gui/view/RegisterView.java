@@ -19,7 +19,6 @@ import org.bonn.se2.model.objects.dto.Customer;
 import org.bonn.se2.model.objects.dto.Salesman;
 import org.bonn.se2.model.objects.dto.User;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
-import org.bonn.se2.services.util.CustomEmailValidator;
 import org.bonn.se2.services.util.PasswordValidator;
 import org.bonn.se2.services.util.SessionFunctions;
 import org.bonn.se2.services.util.UIFunctions;
@@ -136,9 +135,15 @@ public class RegisterView extends VerticalLayout implements View {
         if (isCustomer) {
             userBinder.forField(emailField).asRequired(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
                     .bind(User::getEmail, User::setEmail);
+
         } else {
-            userBinder.forField(emailField).asRequired(new CustomEmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
+
+            userBinder.forField(emailField)
+                    .withValidator(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
+                    .withValidator(email -> email.endsWith("@carsearch24.de"), "Es muss sich um eine Company-Email handeln")
                     .bind(User::getEmail, User::setEmail);
+//            userBinder.forField(emailField).asRequired(new CustomEmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
+//                    .bind(User::getEmail, User::setEmail);
         }
         emailField.setSizeFull();
 
