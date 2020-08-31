@@ -4,7 +4,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import org.bonn.se2.gui.components.NavigationBar;
 import org.bonn.se2.model.objects.dto.Customer;
@@ -12,7 +11,6 @@ import org.bonn.se2.model.objects.dto.Salesman;
 import org.bonn.se2.services.util.Config;
 import org.bonn.se2.services.util.SessionFunctions;
 import org.bonn.se2.services.util.UIFunctions;
-
 
 
 public class ProfileView extends VerticalLayout implements View {
@@ -74,7 +72,6 @@ public class ProfileView extends VerticalLayout implements View {
             //TODO
         }
     }
-
 
 
 }
