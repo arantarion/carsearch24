@@ -63,5 +63,13 @@ $v-font-color: #32373a;
     color: green;
   }
 
+  .background {
+    background-image: url("images/salesman_small.png") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    overflow: auto;
+  }
+
   // Insert your own theme rules here
 }

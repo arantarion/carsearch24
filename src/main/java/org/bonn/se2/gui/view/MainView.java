@@ -34,8 +34,6 @@ import java.util.stream.Collectors;
 
 public class MainView extends VerticalLayout implements View {
 
-    protected Car selectedCar = null;
-
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
@@ -59,11 +57,12 @@ public class MainView extends VerticalLayout implements View {
 
     public void setUp() throws DatabaseException {
 
+        addStyleName("background");
+
         HorizontalLayout horizontalLayout = new HorizontalLayout();
         HorizontalLayout horizontalLayoutCompany = new HorizontalLayout();
         HorizontalLayout h2 = new HorizontalLayout();
 
-        //Button suche = new Button("Suchen", VaadinIcons.SEARCH);
         Button carCreation = new Button("Auto erstellen", VaadinIcons.CAR);
 
         AutocompleteTextField autoSearchField = new AutocompleteTextField();

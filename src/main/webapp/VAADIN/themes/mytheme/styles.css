@@ -15090,3 +15090,11 @@ div.v-layout.v-horizontal.v-widget {
 .mytheme .valid .v-icon {
 	color: green;
 }
+
+.mytheme .background {
+	background-image: url("images/salesman_small.png") !important;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100vh;
+	overflow: auto;
+}
