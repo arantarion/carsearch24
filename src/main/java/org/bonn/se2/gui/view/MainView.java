@@ -6,6 +6,11 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
+import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteSuggestionProvider;
+import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
+import eu.maxschuster.vaadin.autocompletetextfield.provider.CollectionSuggestionProvider;
+import eu.maxschuster.vaadin.autocompletetextfield.provider.MatchMode;
+import eu.maxschuster.vaadin.autocompletetextfield.shared.ScrollBehavior;
 import org.bonn.se2.gui.components.NavigationBar;
 import org.bonn.se2.gui.windows.CarCreationWindow;
 import org.bonn.se2.model.dao.CarDAO;
@@ -16,7 +21,9 @@ import org.bonn.se2.services.util.SessionFunctions;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 
@@ -57,6 +64,12 @@ public class MainView extends VerticalLayout implements View {
         searchField.setIcon(VaadinIcons.SEARCH);
         searchField.setWidth("500px");
 
+        AutocompleteTextField autoSearchField = new AutocompleteTextField();
+        autoSearchField.setPlaceholder("Suchen...");
+        autoSearchField.addStyleName("inline-icon");
+        autoSearchField.setIcon(VaadinIcons.SEARCH);
+        autoSearchField.setWidth("500px");
+
         //Label label = new Label("Bitte geben Sie ein Stichwort ein:");
 
 //        addComponent(horizontalLayout);
@@ -74,6 +87,7 @@ public class MainView extends VerticalLayout implements View {
 
         //horizontalLayoutCompany.addComponent(label);
         horizontalLayoutCompany.addComponent(searchField);
+        horizontalLayoutCompany.addComponent(autoSearchField);
         horizontalLayoutCompany.addComponent(new Label("&nbsp", ContentMode.HTML));
 
         if (SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)) {
@@ -99,15 +113,24 @@ public class MainView extends VerticalLayout implements View {
         this.addComponent(grid);
         this.setComponentAlignment(grid, Alignment.MIDDLE_CENTER);
 
-        //searchBox.getSearchField().addValueChangeListener()
-        // Show selected item
 
-        //searchBox.addSearchListener(e -> {
-        searchField.addValueChangeListener(e -> {
-            if (!searchField.getValue().equals("")) {
+        Collection<String> suggestions = liste.stream().map(Car::toString).collect(Collectors.toList());
+
+        AutocompleteSuggestionProvider suggestionProvider = new CollectionSuggestionProvider(suggestions, MatchMode.CONTAINS, true, Locale.GERMAN);
+
+
+        autoSearchField.setDelay(150); // Delay before sending a query to the server
+        autoSearchField.setItemAsHtml(false); // Suggestions contain html formating. If true, make sure that the html is save to use!
+        autoSearchField.setMinChars(3); // The required value length to trigger a query
+        autoSearchField.setScrollBehavior(ScrollBehavior.NONE); // The method that should be used to compensate scrolling of the page
+        autoSearchField.setSuggestionProvider(suggestionProvider);
+
+        //searchField.addValueChangeListener(e -> {
+        autoSearchField.addValueChangeListener(e -> {
+            if (!autoSearchField.getValue().equals("")) {
                 grid.removeAllColumns();
 
-                String attr = searchField.getValue();
+                String attr = autoSearchField.getValue();
                 List<Car> liste2 = null;
                 try {
                     liste2 = carDAO.retrieveCar(attr);
@@ -135,24 +158,6 @@ public class MainView extends VerticalLayout implements View {
 
     }
 
-    private List<Car> suggestCarBrand(String query, int cap) {
-
-        List<Car> carList = new ArrayList<>();
-
-        try {
-            carList = new CarDAO().retrieveAll();
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-        }
-
-        return carList.stream()
-                .filter(p -> p.contains(query))
-                .limit(cap).collect(Collectors.toList());
-    }
-
-    private String convertValueCar(Car car) {
-        return car.getBrand() + " " + car.getModel() + " aus dem Jahr " + car.getBuildYear();
-    }
 
     private void addGridComponents(Grid<Car> grid) {
         grid.addColumn(Car::getBrand).setCaption("Marke");
