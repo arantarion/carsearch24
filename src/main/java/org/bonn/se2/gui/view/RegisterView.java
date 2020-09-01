@@ -15,6 +15,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se2.model.dao.CustomerDAO;
 import org.bonn.se2.model.dao.SalesmanDAO;
+import org.bonn.se2.model.dao.UserDAO;
 import org.bonn.se2.model.objects.dto.Customer;
 import org.bonn.se2.model.objects.dto.Salesman;
 import org.bonn.se2.model.objects.dto.User;
@@ -24,8 +25,11 @@ import org.bonn.se2.services.util.SessionFunctions;
 import org.bonn.se2.services.util.UIFunctions;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class RegisterView extends VerticalLayout implements View {
 
@@ -90,13 +94,21 @@ public class RegisterView extends VerticalLayout implements View {
         customerButton.addClickListener(event -> {
             auswahlPanel.setVisible(false);
             this.isCustomer = true;
-            setUpStep2();
+            try {
+                setUpStep2();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            }
         });
 
         salesmanButton.addClickListener(event -> {
             auswahlPanel.setVisible(false);
             this.isCustomer = false;
-            setUpStep2();
+            try {
+                setUpStep2();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            }
         });
 
         backButton.addClickListener(event ->
@@ -105,7 +117,7 @@ public class RegisterView extends VerticalLayout implements View {
 
     }
 
-    public void setUpStep2() {
+    public void setUpStep2() throws DatabaseException {
 
         userCreationPanel.setVisible(true);
         this.addComponent(userCreationPanel);
@@ -132,8 +144,14 @@ public class RegisterView extends VerticalLayout implements View {
         lastNameField.setSizeFull();
 
         TextField emailField = new TextField("E-Mail Adresse");
+
+        UserDAO userDAO = new UserDAO();
+        List<String> emails = userDAO.retrieveAll().stream().map(User::getEmail).collect(Collectors.toList());
+
+
         if (isCustomer) {
             userBinder.forField(emailField).asRequired(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
+                    .withValidator(email -> !emails.contains(email), "Diese E-Mail Adresse ist bereits registriert")
                     .bind(User::getEmail, User::setEmail);
 
         } else {
@@ -141,9 +159,9 @@ public class RegisterView extends VerticalLayout implements View {
             userBinder.forField(emailField)
                     .asRequired(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
                     .withValidator(email -> email.endsWith("@carsearch24.de"), "Es muss sich um eine Company-Email handeln")
+                    .withValidator(email -> !emails.contains(email), "Diese E-Mail Adresse ist bereits registriert")
                     .bind(User::getEmail, User::setEmail);
-//            userBinder.forField(emailField).asRequired(new CustomEmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
-//                    .bind(User::getEmail, User::setEmail);
+
         }
         emailField.setSizeFull();
 
