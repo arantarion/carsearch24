@@ -84,6 +84,13 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.14</version>
 		</dependency>
+
+		<dependency>
+			<groupId>eu.maxschuster</groupId>
+			<artifactId>vaadin-autocompletetextfield</artifactId>
+			<version>3.0-alpha-2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
