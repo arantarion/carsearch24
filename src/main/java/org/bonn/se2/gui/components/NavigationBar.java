@@ -24,10 +24,8 @@ public class NavigationBar extends HorizontalLayout {
         this.addComponent(textLabel);
         this.setComponentAlignment(textLabel, Alignment.MIDDLE_CENTER);
 
-
         MenuBar.MenuItem logout = menuBar.addItem("Logout", clickEvent -> LoginControl.logoutUser());
         logout.setIcon(VaadinIcons.SIGN_OUT);
-
 
         this.addComponent(menuBar);
         this.setComponentAlignment(menuBar, Alignment.MIDDLE_RIGHT);

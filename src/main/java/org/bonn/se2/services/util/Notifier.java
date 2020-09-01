@@ -40,6 +40,11 @@ public class Notifier {
         return this;
     }
 
+    public Notifier withMessage(String message) {
+        this.message = message;
+        return this;
+    }
+
     public Notifier withDelay(int delay) {
         this.delay = delay;
         return this;
