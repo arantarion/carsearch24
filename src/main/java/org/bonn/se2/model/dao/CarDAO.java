@@ -107,7 +107,7 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
             offer.setBuildYear(resultSet.getInt("buildyear"));
             offer.setColor(resultSet.getString("color"));
             offer.setPrice(resultSet.getString("price"));
-            offer.setPrice(resultSet.getString("description"));
+            offer.setDescription(resultSet.getString("description"));
             offer.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate());
             offer.setSalesmanID(resultSet.getInt("salesmanID"));
             Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Cars-Objekt: " + offer + " wurde erfolgreich gespeichert.");
@@ -128,7 +128,7 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
             dto.setBuildYear(resultSet.getInt("buildyear"));
             dto.setColor(resultSet.getString("color"));
             dto.setPrice(resultSet.getString("price"));
-            dto.setPrice(resultSet.getString("description"));
+            dto.setDescription(resultSet.getString("description"));
             dto.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate());
             dto.setSalesmanID(resultSet.getInt("salesmanID"));
             Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Cars-Objekt: " + dto + " wurde erfolgreich gespeichert.");
