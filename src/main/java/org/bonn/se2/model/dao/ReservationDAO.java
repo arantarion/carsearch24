@@ -48,7 +48,7 @@ public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInter
     }
 
     @Override
-    public Reservation retrieve(String attribute) throws DatabaseException, InvalidCredentialsException, DontUseException {
+    public Reservation retrieve(String attribute) {
         return null;
     }
 
@@ -75,7 +75,7 @@ public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInter
         return res;
     }
     @Override
-    public Reservation create(Reservation reservation) throws DatabaseException, SQLException {
+    public Reservation create(Reservation reservation) throws DatabaseException {
         //language=PostgreSQL
         final String insertQuery = "INSERT INTO \"CarSearch24\".reservation (\"resDate\", \"carID\", \"customerID\") " +
                 "VALUES (?, ?, ?) " +
