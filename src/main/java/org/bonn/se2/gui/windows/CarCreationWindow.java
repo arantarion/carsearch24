@@ -63,6 +63,11 @@ public class CarCreationWindow extends Window {
             String beschreibung = description.getValue();
             String farbe = color.getValue();
             String preis = price.getValue();
+
+            if (!preis.endsWith("€")) {
+                preis = preis + "€";
+            }
+
             String modell = model.getValue();
             Integer userID = SessionFunctions.getCurrentUser().getUserID();
             Integer salesmanID = null;
