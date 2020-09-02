@@ -2,8 +2,7 @@ package org.bonn.se2.gui.view;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.Page;
-import com.vaadin.shared.Position;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se2.gui.components.NavigationBar;
@@ -31,7 +30,7 @@ public class UserPageView extends VerticalLayout implements View {
     private Customer customer;
     private Salesman salesman;
     protected Car selectedCar = null;
-    
+
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         if (!SessionFunctions.isLoggedIn()) {
             UI.getCurrent().getNavigator().navigateTo(Config.Views.LOGIN);
@@ -52,43 +51,46 @@ public class UserPageView extends VerticalLayout implements View {
     }
 
     public void setUp() throws DatabaseException, InvalidCredentialsException, SQLException {
-        
+
         UserDAO userDAO = new UserDAO();
         User user = userDAO.retrieve(SessionFunctions.getCurrentUser().getUserID());
 
         Button deleteButton = new Button("Löschen");
         deleteButton.setEnabled(false);
-        deleteButton.setVisible(false);
+
+        HorizontalLayout spacer = new HorizontalLayout();
+        spacer.addComponents(new Label("&nbsp", ContentMode.HTML), new Label("&nbsp", ContentMode.HTML), new Label("&nbsp", ContentMode.HTML));
+        spacer.setSizeFull();
+
 
         if (SessionFunctions.getCurrentRole().equals(Config.Roles.CUSTOMER)) {
 
             CustomerDAO customerDAO = new CustomerDAO();
             customer = customerDAO.retrieve(user.getUserID());
 
-            Grid<Car> grid = new Grid<>();
-            grid.setSizeFull();
-            grid.setHeightMode(HeightMode.UNDEFINED);
-            grid.setSelectionMode(Grid.SelectionMode.NONE);
+            //TODO HIER
+
+            Grid<Car> gridReservation = new Grid<>();
+            gridReservation.setSizeFull();
+            gridReservation.setHeightMode(HeightMode.UNDEFINED);
+            gridReservation.setSelectionMode(Grid.SelectionMode.NONE);
 
             CarDAO carDAO = new CarDAO();
+
+            //TODO EHRE
             List<Car> liste = carDAO.retrieveAll();
 
-            grid.setItems(liste);
-            addGridComponentsCar(grid);
+            gridReservation.setItems(liste);
+            addGridComponentsCar(gridReservation);
 
-            HorizontalLayout spacer = new HorizontalLayout();
-            spacer.addComponent(new Label(" "));
-            spacer.setSizeFull();
             this.addComponent(spacer);
-            this.addComponent(grid);
-            this.setComponentAlignment(grid, Alignment.MIDDLE_CENTER);
-
-
-
+            this.addComponents(gridReservation);
+            this.setComponentAlignment(gridReservation, Alignment.MIDDLE_CENTER);
+            this.setComponentAlignment(deleteButton, Alignment.MIDDLE_CENTER);
 
 
         } else {
-            deleteButton.setVisible(true);
+
             SalesmanDAO salesmanDAO = new SalesmanDAO();
             salesman = salesmanDAO.retrieve(user.getUserID());
 
@@ -103,9 +105,6 @@ public class UserPageView extends VerticalLayout implements View {
             gridCars.setItems(liste);
             addGridComponentsCar(gridCars);
 
-            HorizontalLayout spacer = new HorizontalLayout();
-            spacer.addComponent(new Label(" "));
-            spacer.setSizeFull();
             this.addComponent(spacer);
             this.addComponents(gridCars, deleteButton);
             this.setComponentAlignment(gridCars, Alignment.MIDDLE_CENTER);
@@ -133,14 +132,14 @@ public class UserPageView extends VerticalLayout implements View {
         }
     }
 
-    
-    private void addGridComponentsCar(Grid<Car> grid) {
-        grid.addColumn(Car::getBrand).setCaption("Marke");
-        grid.addColumn(Car::getModel).setCaption("Modell");
-        grid.addColumn(Car::getBuildYear).setCaption("Baujahr");
-        grid.addColumn(Car::getColor).setCaption("Farbe");
-        grid.addColumn(Car::getDescription).setCaption("Beschreibung").setSortable(false);
-        grid.addColumn(Car::getPrice).setCaption("Preis");
+
+    private void addGridComponentsCar(Grid<Car> gridReservation) {
+        gridReservation.addColumn(Car::getBrand).setCaption("Marke");
+        gridReservation.addColumn(Car::getModel).setCaption("Modell");
+        gridReservation.addColumn(Car::getBuildYear).setCaption("Baujahr");
+        gridReservation.addColumn(Car::getColor).setCaption("Farbe");
+        gridReservation.addColumn(Car::getDescription).setCaption("Beschreibung").setSortable(false);
+        gridReservation.addColumn(Car::getPrice).setCaption("Preis");
     }
 
 
