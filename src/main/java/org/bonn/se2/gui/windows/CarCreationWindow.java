@@ -64,7 +64,7 @@ public class CarCreationWindow extends Window {
             String farbe = color.getValue();
             String preis = price.getValue();
 
-            if (!preis.endsWith("€")) {
+            if (!preis.contains("€")) {
                 preis = preis + "€";
             }
 
