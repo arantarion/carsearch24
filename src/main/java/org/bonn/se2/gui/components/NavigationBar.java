@@ -28,7 +28,7 @@ public class NavigationBar extends HorizontalLayout {
         labelLayout.addComponent(textLabel);
 
         labelLayout.addLayoutClickListener(e -> {
-           UIFunctions.gotoMain();
+            UIFunctions.gotoMain();
         });
 
         labelLayout.setStyleName("clickLabel");

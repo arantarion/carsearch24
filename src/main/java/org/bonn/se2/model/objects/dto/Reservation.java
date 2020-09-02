@@ -17,7 +17,7 @@ public class Reservation implements Serializable {
         this.CustomID = customID;
     }
 
-    public Reservation(Integer carID, Integer customID){
+    public Reservation(Integer carID, Integer customID) {
         this.CarID = carID;
         this.CustomID = customID;
     }

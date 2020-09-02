@@ -6,17 +6,15 @@ import org.bonn.se2.model.dao.ReservationDAO;
 import org.bonn.se2.model.objects.dto.Car;
 import org.bonn.se2.model.objects.dto.Customer;
 import org.bonn.se2.model.objects.dto.Reservation;
-import org.bonn.se2.model.objects.dto.User;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
 import org.bonn.se2.services.util.SessionFunctions;
 
-import java.sql.SQLException;
-
 public class ReserveCarWindow extends Window {
 
-    private Car car ;
+    private final Car car;
     private int carID;
     private int customerID;
+
     public ReserveCarWindow(Car car) throws DatabaseException {
         this.car = car;
         setUp();
@@ -40,7 +38,7 @@ public class ReserveCarWindow extends Window {
         color.setSizeFull();
         price.setSizeFull();
 
-        reservationLayout.addComponents(title,brand,model,buildYear,color,price);
+        reservationLayout.addComponents(title, brand, model, buildYear, color, price);
 
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
@@ -56,8 +54,8 @@ public class ReserveCarWindow extends Window {
         no.addStyleName("danger");
         buttonLayout.addComponents(yes, no);
 
-        buttonLayout.setComponentAlignment(yes,Alignment.MIDDLE_LEFT);
-        buttonLayout.setComponentAlignment(no,Alignment.MIDDLE_RIGHT);
+        buttonLayout.setComponentAlignment(yes, Alignment.MIDDLE_LEFT);
+        buttonLayout.setComponentAlignment(no, Alignment.MIDDLE_RIGHT);
 
         buttonLayout.setWidth("100%");
 
@@ -76,7 +74,7 @@ public class ReserveCarWindow extends Window {
         yes.addClickListener(e -> {
             try {
                 ReservationDAO reservationDAO = new ReservationDAO();
-                Reservation reservation = new Reservation(carID,customerID);
+                Reservation reservation = new Reservation(carID, customerID);
                 reservationDAO.create(reservation);
                 close();
             } catch (DatabaseException databaseException) {

@@ -28,9 +28,9 @@ import java.util.logging.Logger;
 
 public class UserPageView extends VerticalLayout implements View {
 
+    protected Car selectedCar = null;
     private Customer customer;
     private Salesman salesman;
-    protected Car selectedCar = null;
 
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         if (!SessionFunctions.isLoggedIn()) {

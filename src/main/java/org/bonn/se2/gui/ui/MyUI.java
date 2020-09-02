@@ -9,8 +9,8 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import org.bonn.se2.gui.view.LoginView;
 import org.bonn.se2.gui.view.MainView;
-import org.bonn.se2.gui.view.UserPageView;
 import org.bonn.se2.gui.view.RegisterView;
+import org.bonn.se2.gui.view.UserPageView;
 import org.bonn.se2.model.objects.dto.User;
 import org.bonn.se2.services.util.Config;
 
