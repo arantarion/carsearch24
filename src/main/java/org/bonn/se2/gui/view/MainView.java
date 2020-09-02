@@ -17,6 +17,7 @@ import eu.maxschuster.vaadin.autocompletetextfield.shared.ScrollBehavior;
 import org.bonn.se2.gui.components.NavigationBar;
 import org.bonn.se2.gui.components.TextFieldWithButton;
 import org.bonn.se2.gui.windows.CarCreationWindow;
+import org.bonn.se2.gui.windows.ReserveCarWindow;
 import org.bonn.se2.model.dao.CarDAO;
 import org.bonn.se2.model.objects.dto.Car;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
@@ -114,8 +115,11 @@ public class MainView extends VerticalLayout implements View {
         this.setComponentAlignment(reserveButton, Alignment.MIDDLE_CENTER);
 
         reserveButton.addClickListener(e -> {
-            Notification.show("You clicked me senpai");
+           Notification.show("You clicked me senpai");
+            Window create = new ReserveCarWindow(selectedCar);
+            UI.getCurrent().addWindow(create);
         });
+
 
         Collection<String> suggestions = liste.stream()
                 .map(Car::toString)
