@@ -3,6 +3,8 @@ package org.bonn.se2.gui.view;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
@@ -81,13 +83,14 @@ public class UserPageView extends VerticalLayout implements View {
             ReservationDAO reservationDAO = new ReservationDAO();
             List<Integer> resIDs = reservationDAO.retrieveReservationsByCustomerID(customer.getCustomerID());
 
+
             if (!(resIDs == null)) {
                 List<Car> reservedCars = new ArrayList<>();
 
                 Grid<Car> gridReservation = new Grid<>();
                 gridReservation.setSizeFull();
                 gridReservation.setHeightMode(HeightMode.UNDEFINED);
-                gridReservation.setSelectionMode(Grid.SelectionMode.NONE);
+                gridReservation.setSelectionMode(Grid.SelectionMode.SINGLE);
 
                 CarDAO carDAO = new CarDAO();
 
@@ -98,8 +101,40 @@ public class UserPageView extends VerticalLayout implements View {
                 gridReservation.setItems(reservedCars);
                 addGridComponentsCar(gridReservation);
 
-                this.addComponents(gridReservation, backButton);
+                HorizontalLayout buttonLayout = new HorizontalLayout();
+                buttonLayout.addComponents(backButton, deleteButton);
+                buttonLayout.setComponentAlignment(deleteButton, Alignment.MIDDLE_CENTER);
+                buttonLayout.setComponentAlignment(backButton, Alignment.MIDDLE_LEFT);
+
+                this.addComponents(spacer, gridReservation, buttonLayout);
                 this.setComponentAlignment(gridReservation, Alignment.MIDDLE_CENTER);
+
+                deleteButton.addClickListener(e -> {
+                    try {
+                        ReservationDAO deleteReservationDAO = new ReservationDAO();
+                        deleteReservationDAO.deleteByCarID(customer.getCustomerID(), selectedCar.getCarID());
+                        Notification successNotification = new Notification("Reservierung erfolgreich gelöscht", Notification.Type.ASSISTIVE_NOTIFICATION);
+                        successNotification.setPosition(Position.MIDDLE_CENTER);
+                        successNotification.setDelayMsec(3000);
+                        successNotification.show(Page.getCurrent());
+                        UIFunctions.gotoUserPage();
+
+                    } catch (DatabaseException databaseException) {
+                        Logger.getLogger(UserPageView.class.getName()).log(Level.INFO, "Konnte die Reservierung für " + selectedCar + " nicht löschen");
+                    }
+                });
+
+                gridReservation.addSelectionListener(event -> {
+                    if (event.getFirstSelectedItem().isPresent()) {
+                        selectedCar = (event.getFirstSelectedItem().get());
+                        deleteButton.setEnabled(true);
+                        deleteButton.setVisible(true);
+
+                    } else {
+                        deleteButton.setEnabled(false);
+                    }
+                });
+
 
             } else {
                 Label errNotice = new Label("<h2>Sie haben noch keine Reservierungen gemacht. <br>Sie können auf der Startseite nach Autos suchen und diese für einen Termin reservieren</h2>", ContentMode.HTML);
@@ -140,8 +175,18 @@ public class UserPageView extends VerticalLayout implements View {
                 try {
                     CarDAO deleteDao = new CarDAO();
                     deleteDao.delete(selectedCar);
+                    Notification successNotification = new Notification("Auto wurde erfolgreich gelöscht", Notification.Type.ASSISTIVE_NOTIFICATION);
+                    successNotification.setPosition(Position.MIDDLE_CENTER);
+                    successNotification.setDelayMsec(3000);
+                    successNotification.show(Page.getCurrent());
+                    UIFunctions.gotoUserPage();
                 } catch (DatabaseException databaseException) {
                     Logger.getLogger(UserPageView.class.getName()).log(Level.INFO, "Konnte das Auto " + selectedCar + " nicht löschen");
+                    Notification inUseNotification = new Notification("Es gibt noch mind. eine Reservierung für dieses Auto.", Notification.Type.ERROR_MESSAGE);
+                    inUseNotification.setPosition(Position.MIDDLE_CENTER);
+                    inUseNotification.setDelayMsec(3000);
+                    inUseNotification.show(Page.getCurrent());
+                    UIFunctions.gotoUserPage();
                 }
             });
 

@@ -62,7 +62,7 @@ public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInter
         return execute(sql);
     }
 
-    public List<Integer> retrieveReservationsByCustomerID(int id) throws DatabaseException, InvalidCredentialsException {
+    public List<Integer> retrieveReservationsByCustomerID(int id) throws DatabaseException {
         //language=PostgreSQL
         final String sql = "SELECT * FROM \"CarSearch24\".reservation " +
                 "WHERE \"customerID\" = '" + id + "';";
@@ -101,6 +101,21 @@ public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInter
         List<Reservation> result = executePrepared(deleteQuery, reservation.getReservationID());
         if (result.size() < 1) {
             throw new DatabaseException("delete(Reservation reservation) failed");
+        }
+        return result.get(0);
+    }
+
+    public Reservation deleteByCarID(int customerID, int carID) throws DatabaseException {
+        //language=PostgreSQL
+        final String deleteQuery =
+                "DELETE FROM \"CarSearch24\".reservation\n" +
+                        "WHERE \"customerID\" = ?\n" +
+                        "AND \"carID\" = ?\n" +
+                        "RETURNING *;";
+
+        List<Reservation> result = executePrepared(deleteQuery, customerID, carID);
+        if (result.size() < 1) {
+            throw new DatabaseException("deleteByCarID(int customerID, int carID) failed");
         }
         return result.get(0);
     }
