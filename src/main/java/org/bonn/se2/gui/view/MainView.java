@@ -81,7 +81,6 @@ public class MainView extends VerticalLayout implements View {
         setComponentAlignment(h2, Alignment.TOP_LEFT);
         setComponentAlignment(horizontalLayoutCompany, Alignment.MIDDLE_CENTER);
 
-        //horizontalLayoutCompany.addComponents(autoSearchField, deleteSearchButton);
         TextFieldWithButton fieldWithButton = new TextFieldWithButton();
         horizontalLayoutCompany.addComponent(fieldWithButton);
         horizontalLayoutCompany.addComponent(new Label("&nbsp", ContentMode.HTML));
@@ -188,21 +187,6 @@ public class MainView extends VerticalLayout implements View {
         grid.addColumn(Car::getColor).setCaption("Farbe");
         grid.addColumn(Car::getDescription).setCaption("Beschreibung").setSortable(false);
         grid.addColumn(Car::getPrice).setCaption("Preis");
-//        grid.addComponentColumn(car -> {
-//            Button button;
-//            button = new Button("Reservieren");
-//            button.addClickListener(click -> {
-//                if (SessionFunctions.getCurrentRole().equals(Config.Roles.CUSTOMER)) {
-//                    System.out.println(car);
-//                } else {
-//                    Notification noti = new Notification("Nur Kunden können ein Auto reservieren");
-//                    noti.setDelayMsec(3000);
-//                    noti.setPosition(Position.BOTTOM_CENTER);
-//                    noti.show(Page.getCurrent());
-//                }
-//            });
-//            return button;
-//        }).setCaption("Reservieren");
     }
 
 }
