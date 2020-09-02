@@ -101,7 +101,7 @@ public class LoginView extends VerticalLayout implements View {
             try {
                 LoginControl.checkAuthentication(new UserAtLogin(login, password));
             } catch (InvalidCredentialsException ex) {
-                Notification notification = new Notification("Die Zugangsdaten sind nicht korrekt", Notification.Type.ERROR_MESSAGE);
+                Notification notification = new Notification("Kein User mit diesen Zugangsdaten gefunden!", Notification.Type.ERROR_MESSAGE);
                 notification.setPosition(Position.BOTTOM_CENTER);
                 notification.setDelayMsec(4000);
                 notification.show(Page.getCurrent());
