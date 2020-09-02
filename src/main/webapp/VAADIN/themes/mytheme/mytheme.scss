@@ -38,6 +38,10 @@ $v-font-color: #32373a;
 @mixin mytheme {
   @include valo;
 
+  .clickLabel {
+    cursor: pointer;
+  }
+
   .v-image-logo {
     cursor: pointer;
   }

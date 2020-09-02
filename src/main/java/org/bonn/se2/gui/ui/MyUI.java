@@ -9,7 +9,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import org.bonn.se2.gui.view.LoginView;
 import org.bonn.se2.gui.view.MainView;
-import org.bonn.se2.gui.view.ProfileView;
+import org.bonn.se2.gui.view.UserPageView;
 import org.bonn.se2.gui.view.RegisterView;
 import org.bonn.se2.model.objects.dto.User;
 import org.bonn.se2.services.util.Config;
@@ -44,7 +44,7 @@ public class MyUI extends UI {
         navi.addView(Config.Views.MAIN, MainView.class);
         navi.addView(Config.Views.LOGIN, LoginView.class);
         navi.addView(Config.Views.REGISTRATION, RegisterView.class);
-        navi.addView(Config.Views.PROFILE, ProfileView.class);
+        navi.addView(Config.Views.USERPAGE, UserPageView.class);
 
         UI.getCurrent().getNavigator().navigateTo(Config.Views.LOGIN);
     }

@@ -12,8 +12,8 @@ public class UIFunctions {
         UI.getCurrent().getNavigator().navigateTo(Config.Views.LOGIN);
     }
 
-    public static void gotoProfile() {
-        UI.getCurrent().getNavigator().navigateTo(Config.Views.PROFILE);
+    public static void gotoUserPage() {
+        UI.getCurrent().getNavigator().navigateTo(Config.Views.USERPAGE);
     }
 
 }

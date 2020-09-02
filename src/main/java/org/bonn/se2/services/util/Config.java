@@ -16,10 +16,7 @@ public class Config {
         public static final String MAIN = "main";
         public static final String LOGIN = "login";
         public static final String REGISTRATION = "registration";
-        public static final String PROFILE = "profile";
-        public static final String SEARCH = "search";
-        public static final String MANAGEMENT = "management";
-        public static final String DELETION = "deletion";
+        public static final String USERPAGE = "userpage";
     }
 
     public static class ImagePaths {
