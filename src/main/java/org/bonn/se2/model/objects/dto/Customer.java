@@ -15,7 +15,8 @@ public class Customer extends User implements Serializable {
         super(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
     }
 
-    public Customer() { }
+    public Customer() {
+    }
 
     public Integer getCustomerID() {
         return customerID;
