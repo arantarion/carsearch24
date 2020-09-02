@@ -30,7 +30,7 @@ public class ReserveCarWindow extends Window {
         price.setSizeFull();
 
         reservationLayout.addComponents(title,brand,model,buildYear,color,price);
-        System.out.println(title.getWidthUnits());
+
         this.setContent(reservationLayout);
         this.setWidth("25%");
         this.center();
