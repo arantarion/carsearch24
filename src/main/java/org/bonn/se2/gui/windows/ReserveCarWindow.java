@@ -1,17 +1,28 @@
 package org.bonn.se2.gui.windows;
 
 import com.vaadin.ui.*;
+import org.bonn.se2.model.dao.CustomerDAO;
+import org.bonn.se2.model.dao.ReservationDAO;
 import org.bonn.se2.model.objects.dto.Car;
+import org.bonn.se2.model.objects.dto.Customer;
+import org.bonn.se2.model.objects.dto.Reservation;
+import org.bonn.se2.model.objects.dto.User;
+import org.bonn.se2.process.control.exceptions.DatabaseException;
+import org.bonn.se2.services.util.SessionFunctions;
+
+import java.sql.SQLException;
 
 public class ReserveCarWindow extends Window {
 
     private Car car ;
-    public ReserveCarWindow(Car car){
+    private int carID;
+    private int customerID;
+    public ReserveCarWindow(Car car) throws DatabaseException {
         this.car = car;
         setUp();
     }
 
-    private void setUp(){
+    private void setUp() throws DatabaseException {
 
         VerticalLayout reservationLayout = new VerticalLayout();
 
@@ -55,5 +66,28 @@ public class ReserveCarWindow extends Window {
         this.setContent(reservationLayout);
         this.setWidth("22%");
         this.center();
+
+        carID = car.getCarID();
+        int userID = SessionFunctions.getCurrentUser().getUserID();
+        CustomerDAO customerDAO = new CustomerDAO();
+        Customer customer = customerDAO.retrieve(userID);
+        customerID = customer.getCustomerID();
+
+        yes.addClickListener(e -> {
+            try {
+                ReservationDAO reservationDAO = new ReservationDAO();
+                Reservation reservation = new Reservation(carID,customerID);
+                reservationDAO.create(reservation);
+                close();
+            } catch (DatabaseException databaseException) {
+                databaseException.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        no.addClickListener(e -> {
+            close();
+        });
     }
 }
