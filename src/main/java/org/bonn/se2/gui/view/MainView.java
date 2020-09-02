@@ -114,7 +114,12 @@ public class MainView extends VerticalLayout implements View {
         this.setComponentAlignment(reserveButton, Alignment.MIDDLE_CENTER);
 
         reserveButton.addClickListener(e -> {
-            Window create = new ReserveCarWindow(selectedCar);
+            Window create = null;
+            try {
+                create = new ReserveCarWindow(selectedCar);
+            } catch (DatabaseException databaseException) {
+                databaseException.printStackTrace();
+            }
             UI.getCurrent().addWindow(create);
         });
 
