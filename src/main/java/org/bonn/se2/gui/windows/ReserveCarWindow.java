@@ -81,8 +81,6 @@ public class ReserveCarWindow extends Window {
                 close();
             } catch (DatabaseException databaseException) {
                 databaseException.printStackTrace();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
             }
         });
 
