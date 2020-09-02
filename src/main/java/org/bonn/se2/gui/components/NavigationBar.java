@@ -59,7 +59,7 @@ public class NavigationBar extends HorizontalLayout {
 
 
     private Image createImage() {
-        ThemeResource themeResource = new ThemeResource("images/corporate.png");
+        ThemeResource themeResource = new ThemeResource(Config.ImagePaths.CORPORATE);
         Image logo = new Image(null, themeResource);
         logo.setWidth("230px");
         logo.addStyleName("logo");
