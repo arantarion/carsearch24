@@ -25,7 +25,6 @@ import org.bonn.se2.services.util.SessionFunctions;
 import org.bonn.se2.services.util.UIFunctions;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -148,20 +147,16 @@ public class RegisterView extends VerticalLayout implements View {
         UserDAO userDAO = new UserDAO();
         List<String> emails = userDAO.retrieveAll().stream().map(User::getEmail).collect(Collectors.toList());
 
-
         if (isCustomer) {
             userBinder.forField(emailField).asRequired(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
                     .withValidator(email -> !emails.contains(email), "Diese E-Mail Adresse ist bereits registriert")
                     .bind(User::getEmail, User::setEmail);
-
         } else {
-
             userBinder.forField(emailField)
                     .asRequired(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
                     .withValidator(email -> email.endsWith("@carsearch24.de"), "Es muss sich um eine Company-Email handeln")
                     .withValidator(email -> !emails.contains(email), "Diese E-Mail Adresse ist bereits registriert")
                     .bind(User::getEmail, User::setEmail);
-
         }
         emailField.setSizeFull();
 

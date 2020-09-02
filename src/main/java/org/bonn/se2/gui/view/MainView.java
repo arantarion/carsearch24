@@ -114,9 +114,8 @@ public class MainView extends VerticalLayout implements View {
         this.setComponentAlignment(reserveButton, Alignment.MIDDLE_CENTER);
 
         reserveButton.addClickListener(e -> {
-           Notification.show("You clicked me senpai");
+            Notification.show("You clicked me senpai");
         });
-
 
         Collection<String> suggestions = liste.stream()
                 .map(Car::toString)
