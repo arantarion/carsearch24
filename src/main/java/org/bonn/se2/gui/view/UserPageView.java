@@ -5,6 +5,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.bonn.se2.gui.components.NavigationBar;
 import org.bonn.se2.model.dao.CarDAO;
 import org.bonn.se2.model.dao.CustomerDAO;
@@ -57,11 +58,12 @@ public class UserPageView extends VerticalLayout implements View {
 
         Button deleteButton = new Button("Löschen");
         deleteButton.setEnabled(false);
+        deleteButton.addStyleName("danger");
 
-        HorizontalLayout spacer = new HorizontalLayout();
-        spacer.addComponents(new Label("&nbsp", ContentMode.HTML), new Label("&nbsp", ContentMode.HTML), new Label("&nbsp", ContentMode.HTML));
-        spacer.setSizeFull();
-
+        VerticalLayout spacer = new VerticalLayout();
+        Button spaceButton = new Button();
+        spaceButton.setStyleName(ValoTheme.BUTTON_BORDERLESS);
+        spacer.addComponents(spaceButton, spaceButton, spaceButton, spaceButton);
 
         if (SessionFunctions.getCurrentRole().equals(Config.Roles.CUSTOMER)) {
 
@@ -83,7 +85,6 @@ public class UserPageView extends VerticalLayout implements View {
             gridReservation.setItems(liste);
             addGridComponentsCar(gridReservation);
 
-            this.addComponent(spacer);
             this.addComponents(gridReservation);
             this.setComponentAlignment(gridReservation, Alignment.MIDDLE_CENTER);
             this.setComponentAlignment(deleteButton, Alignment.MIDDLE_CENTER);
@@ -105,8 +106,7 @@ public class UserPageView extends VerticalLayout implements View {
             gridCars.setItems(liste);
             addGridComponentsCar(gridCars);
 
-            this.addComponent(spacer);
-            this.addComponents(gridCars, deleteButton);
+            this.addComponents(spacer, gridCars, deleteButton);
             this.setComponentAlignment(gridCars, Alignment.MIDDLE_CENTER);
             this.setComponentAlignment(deleteButton, Alignment.MIDDLE_CENTER);
 
