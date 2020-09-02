@@ -40,6 +40,9 @@ public class ReserveCarWindow extends Window {
         no.setWidth("100%");
         yes.setHeight("75px");
         no.setHeight("75px");
+
+        yes.addStyleName("friendly");
+        no.addStyleName("danger");
         buttonLayout.addComponents(yes, no);
 
         buttonLayout.setComponentAlignment(yes,Alignment.MIDDLE_LEFT);
