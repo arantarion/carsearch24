@@ -115,7 +115,6 @@ public class MainView extends VerticalLayout implements View {
         this.setComponentAlignment(reserveButton, Alignment.MIDDLE_CENTER);
 
         reserveButton.addClickListener(e -> {
-           Notification.show("You clicked me senpai");
             Window create = new ReserveCarWindow(selectedCar);
             UI.getCurrent().addWindow(create);
         });

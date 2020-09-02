@@ -31,8 +31,26 @@ public class ReserveCarWindow extends Window {
 
         reservationLayout.addComponents(title,brand,model,buildYear,color,price);
 
+
+        HorizontalLayout buttonLayout = new HorizontalLayout();
+        Button yes = new Button("JA");
+        Button no = new Button("NEIN");
+
+        yes.setWidth("100%");
+        no.setWidth("100%");
+        yes.setHeight("75px");
+        no.setHeight("75px");
+        buttonLayout.addComponents(yes, no);
+
+        buttonLayout.setComponentAlignment(yes,Alignment.MIDDLE_LEFT);
+        buttonLayout.setComponentAlignment(no,Alignment.MIDDLE_RIGHT);
+
+        buttonLayout.setWidth("100%");
+
+        reservationLayout.addComponent(buttonLayout);
+
         this.setContent(reservationLayout);
-        this.setWidth("25%");
+        this.setWidth("22%");
         this.center();
     }
 }
