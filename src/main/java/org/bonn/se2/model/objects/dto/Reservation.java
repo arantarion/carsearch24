@@ -13,8 +13,13 @@ public class Reservation implements Serializable {
     public Reservation(Integer reservationID, LocalDate resDate, Integer carID, Integer customID) {
         this.reservationID = reservationID;
         this.resDate = resDate;
-        CarID = carID;
-        CustomID = customID;
+        this.CarID = carID;
+        this.CustomID = customID;
+    }
+
+    public Reservation(Integer carID, Integer customID){
+        this.CarID = carID;
+        this.CustomID = customID;
     }
 
     @Override
