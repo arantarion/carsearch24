@@ -6,6 +6,11 @@ import com.vaadin.data.validator.StringLengthValidator;
 
 import java.util.regex.Pattern;
 
+/**
+ * @author Henry Weckermann
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
+
 public class PasswordValidator extends StringLengthValidator {
 
     public final Pattern textPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$");

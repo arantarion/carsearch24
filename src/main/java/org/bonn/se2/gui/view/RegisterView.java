@@ -30,6 +30,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * @author Henry Weckermann
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
+
 public class RegisterView extends VerticalLayout implements View {
 
     private final Panel auswahlPanel = new Panel("Schritt 1: Registrieren als");

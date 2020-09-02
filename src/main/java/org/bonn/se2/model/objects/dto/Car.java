@@ -1,10 +1,13 @@
 package org.bonn.se2.model.objects.dto;
 
-import org.bonn.se2.services.util.Util;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+
+/**
+ * @author Henry Weckermann
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
 
 public class Car implements Serializable {
 
@@ -21,19 +24,6 @@ public class Car implements Serializable {
     public Car() {
     }
 
-
-    public Car(Integer carID, Integer buildYear, String price, String brand, String description, String color, String model, LocalDate creationDate, Integer salesmanID) {
-        this.carID = carID;
-        this.buildYear = buildYear;
-        this.price = price;
-        this.brand = brand;
-        this.description = description;
-        this.color = color;
-        this.model = model;
-        this.creationDate = creationDate;
-        this.salesmanID = salesmanID;
-    }
-
     public Car(Integer buildYear, String price, String brand, String description, String color, String model, Integer salesmanID) {
         this.buildYear = buildYear;
         this.price = price;
@@ -43,7 +33,6 @@ public class Car implements Serializable {
         this.model = model;
         this.salesmanID = salesmanID;
     }
-
 
     public Integer getSalesmanID() {
         return salesmanID;
@@ -142,12 +131,4 @@ public class Car implements Serializable {
         return Objects.hash(getCarID(), getBuildYear(), getPrice(), getBrand(), getDescription(), getColor(), getModel(), getCreationDate());
     }
 
-    public boolean contains(String query) {
-
-        if (Util.isInteger(query)) {
-            return this.getBuildYear() == Integer.parseInt(query);
-        }
-
-        return this.getModel().contains(query) | this.getBrand().contains(query);
-    }
 }

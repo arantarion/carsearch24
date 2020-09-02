@@ -6,6 +6,11 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
 
+/**
+ * @author Henry Weckermann
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
+
 public class TextFieldWithButton extends CssLayout {
 
     private final AutocompleteTextField textField;

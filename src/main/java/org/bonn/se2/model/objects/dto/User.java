@@ -6,6 +6,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * @author Henry Weckermann
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
+
 public class User implements Serializable {
 
     private Integer userID;

@@ -9,6 +9,11 @@ import org.bonn.se2.model.objects.dto.Reservation;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
 import org.bonn.se2.services.util.SessionFunctions;
 
+/**
+ * @author Anton Drees
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
+
 public class ReserveCarWindow extends Window {
 
     private final Car car;
@@ -47,8 +52,8 @@ public class ReserveCarWindow extends Window {
 
         yes.setWidth("100%");
         no.setWidth("100%");
-        yes.setHeight("75px");
-        no.setHeight("75px");
+        yes.setHeight("45px");
+        no.setHeight("45px");
 
         yes.addStyleName("friendly");
         no.addStyleName("danger");
@@ -82,8 +87,6 @@ public class ReserveCarWindow extends Window {
             }
         });
 
-        no.addClickListener(e -> {
-            close();
-        });
+        no.addClickListener(e -> close());
     }
 }

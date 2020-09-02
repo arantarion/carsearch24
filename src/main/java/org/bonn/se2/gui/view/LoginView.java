@@ -19,6 +19,10 @@ import org.bonn.se2.process.control.exceptions.InvalidCredentialsException;
 import org.bonn.se2.services.util.Config;
 import org.bonn.se2.services.util.UIFunctions;
 
+/**
+ * @author Henry Weckermann, Anton Drees
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
 
 public class LoginView extends VerticalLayout implements View {
 
@@ -34,7 +38,7 @@ public class LoginView extends VerticalLayout implements View {
     }
 
     private void setUp() {
-        ThemeResource themeResource = new ThemeResource("images/corporate.png");
+        ThemeResource themeResource = new ThemeResource(Config.ImagePaths.CORPORATE);
         Image logo = new Image(null, themeResource);
         logo.setWidth("750px");
         logo.addStyleName("logo");
@@ -44,7 +48,7 @@ public class LoginView extends VerticalLayout implements View {
 
         Label platzhalterLabel = new Label("&nbsp", ContentMode.HTML);
 
-        Label labelText = new Label("Willkommen bei CarSearch24! Finden Sie noch heute ein neues Auto.");
+        Label labelText = new Label("<h2>Willkommen bei CarSearch24! Finden Sie noch heute ein neues Auto.</h2>", ContentMode.HTML);
 
         this.addComponent(logo);
         this.addComponent(labelText);

@@ -25,12 +25,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Henry Weckermann
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
 
 public class UserPageView extends VerticalLayout implements View {
 
     protected Car selectedCar = null;
-    private Customer customer;
-    private Salesman salesman;
 
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         if (!SessionFunctions.isLoggedIn()) {
@@ -74,7 +76,7 @@ public class UserPageView extends VerticalLayout implements View {
         if (SessionFunctions.getCurrentRole().equals(Config.Roles.CUSTOMER)) {
 
             CustomerDAO customerDAO = new CustomerDAO();
-            customer = customerDAO.retrieve(user.getUserID());
+            Customer customer = customerDAO.retrieve(user.getUserID());
 
             ReservationDAO reservationDAO = new ReservationDAO();
             List<Integer> resIDs = reservationDAO.retrieveReservationsByCustomerID(customer.getCustomerID());
@@ -113,7 +115,7 @@ public class UserPageView extends VerticalLayout implements View {
         } else {
 
             SalesmanDAO salesmanDAO = new SalesmanDAO();
-            salesman = salesmanDAO.retrieve(user.getUserID());
+            Salesman salesman = salesmanDAO.retrieve(user.getUserID());
 
             Grid<Car> gridCars = new Grid<>();
             gridCars.setSizeFull();

@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Henry Weckermann, Anton Drees
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
+
 public class SalesmanDAO extends AbstractDAO<Salesman> implements DAOInterface<Salesman> {
 
     public SalesmanDAO() throws DatabaseException {

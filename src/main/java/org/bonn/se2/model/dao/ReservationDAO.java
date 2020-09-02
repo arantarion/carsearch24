@@ -10,6 +10,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Anton Drees
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
+
 public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInterface<Reservation> {
 
     public ReservationDAO() throws DatabaseException {

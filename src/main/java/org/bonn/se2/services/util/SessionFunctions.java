@@ -3,6 +3,11 @@ package org.bonn.se2.services.util;
 import com.vaadin.server.VaadinSession;
 import org.bonn.se2.model.objects.dto.User;
 
+/**
+ * @author Henry Weckermann
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
+
 public class SessionFunctions {
 
     private static final String CURRENT = "currentUser";

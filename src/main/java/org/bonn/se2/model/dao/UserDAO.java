@@ -9,6 +9,11 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author Henry Weckermann, Anton Drees
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
+
 public class UserDAO extends AbstractDAO<User> implements DAOInterface<User> {
 
     public UserDAO() throws DatabaseException {

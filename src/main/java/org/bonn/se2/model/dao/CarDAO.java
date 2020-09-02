@@ -15,6 +15,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Henry Weckermann, Anton Drees
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
+
 public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
 
     public CarDAO() throws DatabaseException {
@@ -31,7 +36,7 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
         if (result.size() < 1) {
             throw new InvalidCredentialsException();
         }
-        String loggerMsg = "Das Cars-Objekt mit der carID: " + carID + " wurde abgerufen.";
+        String loggerMsg = "Das Car-Objekt mit der carID: " + carID + " wurde abgerufen.";
         Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, loggerMsg);
         return result.get(0);
     }

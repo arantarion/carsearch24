@@ -1,6 +1,5 @@
 package org.bonn.se2.gui.components;
 
-
 import com.vaadin.event.MouseEvents;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
@@ -11,6 +10,10 @@ import org.bonn.se2.services.util.Config;
 import org.bonn.se2.services.util.SessionFunctions;
 import org.bonn.se2.services.util.UIFunctions;
 
+/**
+ * @author Henry Weckermann
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
 
 public class NavigationBar extends HorizontalLayout {
 
@@ -36,11 +39,13 @@ public class NavigationBar extends HorizontalLayout {
         this.addComponent(labelLayout);
         this.setComponentAlignment(labelLayout, Alignment.MIDDLE_CENTER);
 
+        String userFirstName = SessionFunctions.getCurrentUser().getFirstName();
+
         if (SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)) {
-            MenuBar.MenuItem userSiteButton = menuBar.addItem("Meine Autos", clickEvent -> UIFunctions.gotoUserPage());
+            MenuBar.MenuItem userSiteButton = menuBar.addItem(userFirstName + "'s Autos", clickEvent -> UIFunctions.gotoUserPage());
             userSiteButton.setIcon(VaadinIcons.USER);
         } else {
-            MenuBar.MenuItem userSiteButton = menuBar.addItem("Meine Reservierungen", clickEvent -> UIFunctions.gotoUserPage());
+            MenuBar.MenuItem userSiteButton = menuBar.addItem(userFirstName + "'s Reservierungen", clickEvent -> UIFunctions.gotoUserPage());
             userSiteButton.setIcon(VaadinIcons.USER);
         }
 

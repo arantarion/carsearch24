@@ -31,6 +31,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+/**
+ * @author Henry Weckermann, Anton Drees
+ * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
+ */
 
 public class MainView extends VerticalLayout implements View {
 
@@ -171,7 +175,7 @@ public class MainView extends VerticalLayout implements View {
             if (event.getFirstSelectedItem().isPresent()) {
                 selectedCar = (event.getFirstSelectedItem().get());
                 if (SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)) {
-                    Notification errNotification = new Notification("Nur Kunden können ein Auto reservieren");
+                    Notification errNotification = new Notification("Nur Kunden können ein Auto reservieren", Notification.Type.ERROR_MESSAGE);
                     errNotification.setDelayMsec(3000);
                     errNotification.setPosition(Position.BOTTOM_CENTER);
                     errNotification.show(Page.getCurrent());
