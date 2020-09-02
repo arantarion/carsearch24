@@ -9,6 +9,7 @@ import org.bonn.se2.process.control.exceptions.InvalidCredentialsException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInterface<Reservation> {
@@ -58,6 +59,21 @@ public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInter
         return execute(sql);
     }
 
+    public List<Integer> retrieveReservations(int id) throws DatabaseException, InvalidCredentialsException {
+        //language=PostgreSQL
+        final String sql = "SELECT * FROM \"CarSearch24\".reservation " +
+                "WHERE \"customerID\" = '" + id + "';";
+
+        List<Reservation> result = execute(sql);
+        if (result.size() < 1) {
+            throw new InvalidCredentialsException();
+        }
+        List<Integer> res = new ArrayList<Integer>();
+        for(int i = 0; i < result.size(); i++){
+            res.add(result.get(i).getCarID());
+        }
+        return res;
+    }
     @Override
     public Reservation create(Reservation reservation) throws DatabaseException {
         //language=PostgreSQL
