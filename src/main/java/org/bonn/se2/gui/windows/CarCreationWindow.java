@@ -11,6 +11,7 @@ import org.bonn.se2.model.objects.dto.Car;
 import org.bonn.se2.model.objects.dto.Salesman;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
 import org.bonn.se2.services.util.SessionFunctions;
+import org.bonn.se2.services.util.UIFunctions;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -106,6 +107,7 @@ public class CarCreationWindow extends Window {
                 notification.setPosition(Position.BOTTOM_CENTER);
                 notification.setDelayMsec(4000);
                 notification.show(Page.getCurrent());
+                UIFunctions.gotoMain();
             } catch (DatabaseException | SQLException e) {
                 Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
                         new Throwable().getStackTrace()[0].getMethodName() + " failed", e);

@@ -1,6 +1,7 @@
 package org.bonn.se2.gui.ui;
 
 
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
@@ -24,6 +25,7 @@ import javax.servlet.annotation.WebServlet;
  * overridden to add component to the user interface and initialize non-component functionality.
  */
 @Theme("mytheme")
+@PreserveOnRefresh
 public class MyUI extends UI {
 
     private User user = null;
