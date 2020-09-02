@@ -1,11 +1,14 @@
 package org.bonn.se2.gui.components;
 
+
 import com.vaadin.event.MouseEvents;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se2.process.control.LoginControl;
+import org.bonn.se2.services.util.Config;
+import org.bonn.se2.services.util.SessionFunctions;
 import org.bonn.se2.services.util.UIFunctions;
 
 
@@ -20,9 +23,27 @@ public class NavigationBar extends HorizontalLayout {
 
         MenuBar menuBar = new MenuBar();
 
+        HorizontalLayout labelLayout = new HorizontalLayout();
         Label textLabel = new Label("<h3>&emsp;&emsp; Willkommen auf CarSearch24! Finden Sie noch heute ein neues Auto &emsp;&emsp;&emsp;&emsp;</h3>", ContentMode.HTML);
-        this.addComponent(textLabel);
-        this.setComponentAlignment(textLabel, Alignment.MIDDLE_CENTER);
+        labelLayout.addComponent(textLabel);
+
+        labelLayout.addLayoutClickListener(e -> {
+           UIFunctions.gotoMain();
+        });
+
+        labelLayout.setStyleName("clickLabel");
+
+        this.addComponent(labelLayout);
+        this.setComponentAlignment(labelLayout, Alignment.MIDDLE_CENTER);
+
+        if (SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)) {
+            MenuBar.MenuItem userSiteButton = menuBar.addItem("Meine Autos", clickEvent -> UIFunctions.gotoUserPage());
+            userSiteButton.setIcon(VaadinIcons.USER);
+        } else {
+            MenuBar.MenuItem userSiteButton = menuBar.addItem("Meine Reservierungen", clickEvent -> UIFunctions.gotoUserPage());
+            userSiteButton.setIcon(VaadinIcons.USER);
+        }
+
 
         MenuBar.MenuItem logout = menuBar.addItem("Logout", clickEvent -> LoginControl.logoutUser());
         logout.setIcon(VaadinIcons.SIGN_OUT);
