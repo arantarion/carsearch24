@@ -13,7 +13,7 @@ import org.bonn.se2.services.util.SessionFunctions;
 import org.bonn.se2.services.util.UIFunctions;
 
 
-public class ProfileView extends VerticalLayout implements View {
+public class UserPageView extends VerticalLayout implements View {
 
     private static Customer customer;
     private static Salesman salesman;
@@ -25,7 +25,7 @@ public class ProfileView extends VerticalLayout implements View {
     }
 
     public static void setCustomer(Customer customer) {
-        ProfileView.customer = customer;
+        UserPageView.customer = customer;
     }
 
     public static Salesman getSalesman() {
@@ -33,7 +33,7 @@ public class ProfileView extends VerticalLayout implements View {
     }
 
     public static void setSalesman(Salesman salesman) {
-        ProfileView.salesman = salesman;
+        UserPageView.salesman = salesman;
     }
 
     public static boolean isMyProfile() {
@@ -41,7 +41,7 @@ public class ProfileView extends VerticalLayout implements View {
     }
 
     public static void setMyProfile(boolean myProfile) {
-        ProfileView.myProfile = myProfile;
+        UserPageView.myProfile = myProfile;
     }
 
     public void enter(ViewChangeListener.ViewChangeEvent event) {
