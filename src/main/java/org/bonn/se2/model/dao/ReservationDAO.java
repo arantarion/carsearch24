@@ -1,16 +1,14 @@
 package org.bonn.se2.model.dao;
 
 import org.bonn.se2.model.objects.dto.Reservation;
-import org.bonn.se2.model.objects.dto.User;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
-import org.bonn.se2.process.control.exceptions.DontUseException;
 import org.bonn.se2.process.control.exceptions.InvalidCredentialsException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInterface<Reservation> {
 
@@ -59,21 +57,20 @@ public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInter
         return execute(sql);
     }
 
-    public List<Integer> retrieveReservations(int id) throws DatabaseException, InvalidCredentialsException {
+    public List<Integer> retrieveReservationsByCustomerID(int id) throws DatabaseException, InvalidCredentialsException {
         //language=PostgreSQL
         final String sql = "SELECT * FROM \"CarSearch24\".reservation " +
                 "WHERE \"customerID\" = '" + id + "';";
 
         List<Reservation> result = execute(sql);
         if (result.size() < 1) {
-            throw new InvalidCredentialsException();
+            return null;
         }
-        List<Integer> res = new ArrayList<Integer>();
-        for(int i = 0; i < result.size(); i++){
-            res.add(result.get(i).getCarID());
-        }
-        return res;
+
+        return result.stream().map(Reservation::getCarID).distinct().collect(Collectors.toList());
     }
+
+
     @Override
     public Reservation create(Reservation reservation) throws DatabaseException {
         //language=PostgreSQL
