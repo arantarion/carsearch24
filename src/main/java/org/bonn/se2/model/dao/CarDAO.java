@@ -45,12 +45,16 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
     public List<Car> retrieveCar(String attribute) throws DatabaseException, SQLException {
         Statement statement = this.getStatement();
         ResultSet resultSet;
-
+        attribute = attribute.substring(0, 1).toUpperCase() + attribute.substring(1);
         //language=PostgreSQL
         final String insert = "SELECT * " +
                 "FROM \"CarSearch24\".car " +
-                "WHERE model LIKE '%" + attribute + "%' OR brand LIKE '%" + attribute + "%' OR buildyear LIKE '%" + attribute + "%' " +
-                "OR color LIKE '%'" + attribute + "'%' ";
+                "WHERE model LIKE '%" + attribute + "%' " +
+                "OR brand LIKE '%" + attribute + "%' " +
+                "OR buildyear LIKE '%" + attribute + "%' " +
+                "OR color LIKE '%" + attribute + "%' " +
+                "OR price LIKE '%" + attribute + "%' ";
+
         resultSet = statement.executeQuery(insert);
         List<Car> liste = new ArrayList<>();
         Car dto = null;
