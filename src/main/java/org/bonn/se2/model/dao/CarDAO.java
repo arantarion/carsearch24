@@ -50,7 +50,7 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
         final String insert = "SELECT * " +
                 "FROM \"CarSearch24\".car " +
                 "WHERE model LIKE '%" + attribute + "%' OR brand LIKE '%" + attribute + "%' OR buildyear LIKE '%" + attribute + "%' " +
-                "OR color LIKE '%'";
+                "OR color LIKE '%'" + attribute + "'%' ";
         resultSet = statement.executeQuery(insert);
         List<Car> liste = new ArrayList<>();
         Car dto = null;

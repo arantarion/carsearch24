@@ -21,7 +21,6 @@ import org.bonn.se2.model.dao.CarDAO;
 import org.bonn.se2.model.objects.dto.Car;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
 import org.bonn.se2.services.util.Config;
-import org.bonn.se2.services.util.Notifier;
 import org.bonn.se2.services.util.SessionFunctions;
 
 import java.sql.SQLException;
@@ -33,6 +32,8 @@ import java.util.stream.Collectors;
 
 
 public class MainView extends VerticalLayout implements View {
+
+    protected Car selectedCar = null;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -107,6 +108,16 @@ public class MainView extends VerticalLayout implements View {
         this.addComponent(grid);
         this.setComponentAlignment(grid, Alignment.MIDDLE_CENTER);
 
+        Button reserveButton = new Button("Reservieren");
+        reserveButton.setEnabled(false);
+        this.addComponent(reserveButton);
+        this.setComponentAlignment(reserveButton, Alignment.MIDDLE_CENTER);
+
+        reserveButton.addClickListener(e -> {
+           Notification.show("You clicked me senpai");
+        });
+
+
         Collection<String> suggestions = liste.stream()
                 .map(Car::toString)
                 .map(w -> w.split("\\s+"))
@@ -123,13 +134,14 @@ public class MainView extends VerticalLayout implements View {
         fieldWithButton.getTextField().setSuggestionProvider(suggestionProvider);
 
         fieldWithButton.getTextField().addValueChangeListener(e -> {
-            if (!autoSearchField.getValue().equals("")) {
+            if (!fieldWithButton.getTextField().getValue().equals("")) {
 
                 grid.removeAllColumns();
-                String attr = autoSearchField.getValue();
+                String attr = fieldWithButton.getTextField().getValue();
                 List<Car> liste2 = null;
                 try {
                     liste2 = carDAO.retrieveCar(attr);
+                    liste2.forEach(System.out::println);
                 } catch (DatabaseException | SQLException databaseException) {
                     databaseException.printStackTrace();
                 }
@@ -149,6 +161,21 @@ public class MainView extends VerticalLayout implements View {
             addGridComponents(grid);
         });
 
+        grid.addSelectionListener(event -> {
+            if (event.getFirstSelectedItem().isPresent()) {
+                selectedCar = (event.getFirstSelectedItem().get());
+                if (SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)) {
+                    Notification errNotification = new Notification("Nur Kunden können ein Auto reservieren");
+                    errNotification.setDelayMsec(3000);
+                    errNotification.setPosition(Position.BOTTOM_CENTER);
+                    errNotification.show(Page.getCurrent());
+                } else {
+                    reserveButton.setEnabled(true);
+                }
+            } else {
+                reserveButton.setEnabled(false);
+            }
+        });
     }
 
     private void addGridComponents(Grid<Car> grid) {
@@ -158,21 +185,21 @@ public class MainView extends VerticalLayout implements View {
         grid.addColumn(Car::getColor).setCaption("Farbe");
         grid.addColumn(Car::getDescription).setCaption("Beschreibung").setSortable(false);
         grid.addColumn(Car::getPrice).setCaption("Preis");
-        grid.addComponentColumn(car -> {
-            Button button;
-            button = new Button("Reservieren");
-            button.addClickListener(click -> {
-                if (SessionFunctions.getCurrentRole().equals(Config.Roles.CUSTOMER)) {
-                    System.out.println(car);
-                } else {
-                    Notification noti = new Notification("Nur Kunden können ein Auto reservieren");
-                    noti.setDelayMsec(3000);
-                    noti.setPosition(Position.BOTTOM_CENTER);
-                    noti.show(Page.getCurrent());
-                }
-            });
-            return button;
-        }).setCaption("Reservieren");
+//        grid.addComponentColumn(car -> {
+//            Button button;
+//            button = new Button("Reservieren");
+//            button.addClickListener(click -> {
+//                if (SessionFunctions.getCurrentRole().equals(Config.Roles.CUSTOMER)) {
+//                    System.out.println(car);
+//                } else {
+//                    Notification noti = new Notification("Nur Kunden können ein Auto reservieren");
+//                    noti.setDelayMsec(3000);
+//                    noti.setPosition(Position.BOTTOM_CENTER);
+//                    noti.show(Page.getCurrent());
+//                }
+//            });
+//            return button;
+//        }).setCaption("Reservieren");
     }
 
 }
