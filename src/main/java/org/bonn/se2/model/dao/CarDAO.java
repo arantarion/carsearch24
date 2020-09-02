@@ -75,7 +75,41 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
             }
             Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Alle offer mit Attribut: " + attribute + " wurden abgerufen");
         } catch (SQLException e) {
-            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "retrieveCompanyOffers(int id) in JobOfferDAO failed", e);
+            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "retrieveCar(String attribute) in CarDAO failed", e);
+        }
+        return liste;
+    }
+
+    public List<Car> retrieveCarBySalesman(int salesmanID) throws DatabaseException, SQLException {
+        Statement statement = this.getStatement();
+        ResultSet resultSet;
+
+        //language=PostgreSQL
+        final String insert = "SELECT * " +
+                "FROM \"CarSearch24\".car " +
+                "WHERE \"salesmanID\" = " + salesmanID;
+
+        resultSet = statement.executeQuery(insert);
+        List<Car> liste = new ArrayList<>();
+        Car dto = null;
+
+        try {
+            while (resultSet.next()) {
+                dto = new Car();
+                dto.setModel(resultSet.getString("model"));
+                dto.setBrand(resultSet.getString("brand"));
+                dto.setDescription(resultSet.getString("description"));
+                dto.setCarID(resultSet.getInt("carID"));
+                dto.setPrice(resultSet.getString("price"));
+                dto.setColor(resultSet.getString("color"));
+                dto.setSalesmanID(resultSet.getInt("salesmanID"));
+                dto.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate()); //creationDate
+                dto.setBuildYear(Integer.parseInt(resultSet.getString("buildyear")));
+                liste.add(dto);
+            }
+            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Alle Autos von Salesman mit ID: " + salesmanID + " wurden abgerufen");
+        } catch (SQLException e) {
+            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "retrieveCarBySalesman(int salesmanID) in JobOfferDAO failed", e);
         }
         return liste;
     }
