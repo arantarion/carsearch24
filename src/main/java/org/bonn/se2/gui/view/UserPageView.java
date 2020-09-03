@@ -213,5 +213,4 @@ public class UserPageView extends VerticalLayout implements View {
         gridReservation.addColumn(Car::getPrice).setCaption("Preis");
     }
 
-
 }
