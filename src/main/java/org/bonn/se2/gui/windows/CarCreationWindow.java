@@ -58,6 +58,7 @@ public class CarCreationWindow extends Window {
         this.setWidth("17%");
         this.center();
 
+        // dirty way to enforce that the year is actually an integer and also between 1900 and 2100
         carBinder.forField(buildYear)
                 .withConverter(new StringToIntegerConverter("Bitte geben Sie ein gültiges Jahr an!"))
                 .withValidator(year -> year >= 1900 && year < 2100, "Bitte geben Sie ein gültiges Jahr an!")
@@ -70,6 +71,7 @@ public class CarCreationWindow extends Window {
             String farbe = color.getValue();
             String preis = price.getValue();
 
+            // add € if the € sign is missing
             if (!preis.contains("€")) {
                 preis = preis + "€";
             }

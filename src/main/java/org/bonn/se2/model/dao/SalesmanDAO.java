@@ -33,7 +33,8 @@ public class SalesmanDAO extends AbstractDAO<Salesman> implements DAOInterface<S
         List<Salesman> result = execute(sql);
 
         if (result.size() < 1) {
-            Logger.getLogger(SalesmanDAO.class.getName()).log(Level.SEVERE, "retrieve(int id) did not return a DTO.");
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed");
             throw new DatabaseException("retrieve(int id) did not return a DTO");
         }
         Logger.getLogger(SalesmanDAO.class.getName()).log(Level.INFO, "Der Salesman mit der ID: " + id + " wurde erfolgreich abgerufen.");
@@ -50,7 +51,8 @@ public class SalesmanDAO extends AbstractDAO<Salesman> implements DAOInterface<S
 
         List<Salesman> result = executePrepared(sql, attribute, attribute);
         if (result.size() < 1) {
-            Logger.getLogger(SalesmanDAO.class.getName()).log(Level.SEVERE, "retrieve(String attribute) did not return a DTO.");
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed");
             throw new DatabaseException("retrieve(String attribute) did not return a DTO");
         }
         Logger.getLogger(SalesmanDAO.class.getName()).log(Level.INFO, "Der Salesman mit der Email: " + attribute + " wurde erfolgreich abgerufen.");
@@ -65,7 +67,7 @@ public class SalesmanDAO extends AbstractDAO<Salesman> implements DAOInterface<S
                 "SELECT * FROM \"CarSearch24\".user " +
                         "JOIN \"CarSearch24\".salesman ON \"user\".\"userID\" = salesman.\"userID\"";
 
-        Logger.getLogger(SalesmanDAO.class.getName()).log(Level.INFO, "Alle Salesmänner wurden abgerufen.");
+        Logger.getLogger(SalesmanDAO.class.getName()).log(Level.INFO, "Alle Verkäufer wurden abgerufen.");
         return execute(sql);
     }
 
@@ -96,6 +98,8 @@ public class SalesmanDAO extends AbstractDAO<Salesman> implements DAOInterface<S
             Logger.getLogger(SalesmanDAO.class.getName()).log(Level.INFO, "Der Salesman : " + salesman1 + " konnte erfolgreich gespeichert werden.");
             return salesman1;
         } else {
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed");
             return null;
         }
     }
@@ -116,7 +120,8 @@ public class SalesmanDAO extends AbstractDAO<Salesman> implements DAOInterface<S
 
 
         } catch (SQLException | InvalidCredentialsException e) {
-            Logger.getLogger(SalesmanDAO.class.getName()).log(Level.SEVERE, "create(ResultSet resultSet) in SalesmanDAO failed");
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed", e);
             throw new DatabaseException("create(ResultSet resultSet) in SalesmanDAO failed");
         }
 
@@ -134,7 +139,8 @@ public class SalesmanDAO extends AbstractDAO<Salesman> implements DAOInterface<S
 
         List<Salesman> result = executePrepared(deleteQuery, salesman.getSalesmanID());
         if (result.size() < 1) {
-            Logger.getLogger(SalesmanDAO.class.getName()).log(Level.SEVERE, "delete(Salesman Salesman) in SalesmanDAO failed");
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed");
             throw new DatabaseException("delete(Salesman Salesman) failed");
         }
         Logger.getLogger(SalesmanDAO.class.getName()).log(Level.INFO, "Salesman: " + salesman + " wurde erfolgreich gelöscht.");
@@ -150,7 +156,8 @@ public class SalesmanDAO extends AbstractDAO<Salesman> implements DAOInterface<S
 
         List<Salesman> result = executePrepared(deleteQuery, id);
         if (result.size() < 1) {
-            Logger.getLogger(SalesmanDAO.class.getName()).log(Level.SEVERE, "delete(int ID) in SalesmanDAO failed");
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed");
             throw new DatabaseException("delete(int ID) failed");
         }
         Logger.getLogger(SalesmanDAO.class.getName()).log(Level.SEVERE, "Salesman mit der ID: " + id + " wurde erfolgreich gelöscht.");

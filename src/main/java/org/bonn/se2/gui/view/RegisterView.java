@@ -75,8 +75,8 @@ public class RegisterView extends VerticalLayout implements View {
         auswahlPanel.setContent(content);
         buttonLayout.setSizeFull();
 
-        Button customerButton = new Button("Kunde"); //maybe with arrows??
-        Button salesmanButton = new Button("Vertriebler"); //maybe with arrows??
+        Button customerButton = new Button("Kunde");
+        Button salesmanButton = new Button("Vertriebler");
         Button backButton = new Button("Zurück", VaadinIcons.ARROW_LEFT);
 
         prevButtonLayout.addComponent(backButton);
@@ -101,7 +101,8 @@ public class RegisterView extends VerticalLayout implements View {
             try {
                 setUpStep2();
             } catch (DatabaseException e) {
-                e.printStackTrace();
+                Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                        new Throwable().getStackTrace()[0].getMethodName() + " failed", e);
             }
         });
 
@@ -111,7 +112,8 @@ public class RegisterView extends VerticalLayout implements View {
             try {
                 setUpStep2();
             } catch (DatabaseException e) {
-                e.printStackTrace();
+                Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                        new Throwable().getStackTrace()[0].getMethodName() + " failed", e);
             }
         });
 
@@ -135,28 +137,34 @@ public class RegisterView extends VerticalLayout implements View {
 
         FormLayout content = new FormLayout();
 
+        // Field for first name. No validator
         TextField firstNameField = new TextField("Vorname:");
         firstNameField.setRequiredIndicatorVisible(true);
         userBinder.forField(firstNameField).asRequired("Bitte geben Sie Ihren Vornamen an")
                 .bind(User::getFirstName, User::setFirstName);
         firstNameField.setSizeFull();
 
+        // Field for last name. No validator
         TextField lastNameField = new TextField("Nachname:");
         lastNameField.setRequiredIndicatorVisible(true);
         userBinder.forField(lastNameField).asRequired("Bitte geben Sie Ihren Nachname an")
                 .bind(User::getLastName, User::setLastName);
         lastNameField.setSizeFull();
 
+        // Email field with validators.
         TextField emailField = new TextField("E-Mail Adresse");
 
+        // Get a list of all email addresses, to check if it already exists
         UserDAO userDAO = new UserDAO();
         List<String> emails = userDAO.retrieveAll().stream().map(User::getEmail).collect(Collectors.toList());
 
         if (isCustomer) {
+            // validate if email is already in use
             userBinder.forField(emailField).asRequired(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
                     .withValidator(email -> !emails.contains(email), "Diese E-Mail Adresse ist bereits registriert")
                     .bind(User::getEmail, User::setEmail);
         } else {
+            // validate if email is in use and if it ends with @carsearch24.de
             userBinder.forField(emailField)
                     .asRequired(new EmailValidator("Bitte geben Sie eine gültige E-Mail Adresse an"))
                     .withValidator(email -> email.endsWith("@carsearch24.de"), "Es muss sich um eine Company-Email handeln")
@@ -165,6 +173,7 @@ public class RegisterView extends VerticalLayout implements View {
         }
         emailField.setSizeFull();
 
+        // Password field with custom PasswordValidator
         PasswordField passwordField = new PasswordField("Passwort");
         userBinder.forField(passwordField).asRequired(new PasswordValidator())
                 .bind(User::getPassword, User::setPassword);
@@ -183,16 +192,19 @@ public class RegisterView extends VerticalLayout implements View {
 
         this.setComponentAlignment(userCreationPanel, Alignment.MIDDLE_CENTER);
 
+
         backButton.addClickListener(clickEvent -> {
             userCreationPanel.setVisible(false);
 
             setUpStep1();
         });
 
+
         weiterButton1.addClickListener(clickEvent -> {
 
             boolean isValidEntry = true;
 
+            // check if passwords match
             if (!passwordField.getValue().equals(passwordCheckField.getValue())) {
                 Notification notification = new Notification("Die Passwörter stimmen nicht überein.", Notification.Type.ERROR_MESSAGE);
                 notification.setPosition(Position.BOTTOM_CENTER);
@@ -201,6 +213,7 @@ public class RegisterView extends VerticalLayout implements View {
                 return;
             }
 
+            // create new user
             User myUser = new User();
             try {
                 userBinder.writeBean(myUser);

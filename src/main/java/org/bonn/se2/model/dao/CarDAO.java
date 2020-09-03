@@ -36,7 +36,7 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
         if (result.size() < 1) {
             throw new InvalidCredentialsException();
         }
-        String loggerMsg = "Das Car-Objekt mit der carID: " + carID + " wurde abgerufen.";
+        String loggerMsg = "Das Auto mit der carID: " + carID + " wurde abgerufen.";
         Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, loggerMsg);
         return result.get(0);
     }
@@ -62,7 +62,7 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
 
         resultSet = statement.executeQuery(insert);
         List<Car> liste = new ArrayList<>();
-        Car dto = null;
+        Car dto;
 
         try {
             while (resultSet.next()) {
@@ -78,9 +78,10 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
                 dto.setBuildYear(Integer.parseInt(resultSet.getString("buildyear")));
                 liste.add(dto);
             }
-            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Alle offer mit Attribut: " + attribute + " wurden abgerufen");
+            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Alle Autos mit Attribut: " + attribute + " wurden abgerufen");
         } catch (SQLException e) {
-            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "retrieveCar(String attribute) in CarDAO failed", e);
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed", e);
         }
         return liste;
     }
@@ -96,7 +97,7 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
 
         resultSet = statement.executeQuery(insert);
         List<Car> liste = new ArrayList<>();
-        Car dto = null;
+        Car dto;
 
         try {
             while (resultSet.next()) {
@@ -114,7 +115,8 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
             }
             Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Alle Autos von Salesman mit ID: " + salesmanID + " wurden abgerufen");
         } catch (SQLException e) {
-            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "retrieveCarBySalesman(int salesmanID) in JobOfferDAO failed", e);
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed", e);
         }
         return liste;
     }
@@ -140,23 +142,24 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
                 "', '" + car.getSalesmanID() +
                 "') " +
                 "RETURNING *";
+
         PreparedStatement pst = this.getPreparedStatement(insertQuery2);
         ResultSet resultSet = pst.executeQuery();
         if (resultSet.next()) {
-            Car offer = new Car();
-            offer.setCarID(resultSet.getInt("carID"));
-            offer.setBrand(resultSet.getString("brand"));
-            offer.setModel(resultSet.getString("model"));
-            offer.setBuildYear(resultSet.getInt("buildyear"));
-            offer.setColor(resultSet.getString("color"));
-            offer.setPrice(resultSet.getString("price"));
-            offer.setDescription(resultSet.getString("description"));
-            offer.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate());
-            offer.setSalesmanID(resultSet.getInt("salesmanID"));
-            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Cars-Objekt: " + offer + " wurde erfolgreich gespeichert.");
-            return offer;
+            Car createdCar = new Car();
+            createdCar.setCarID(resultSet.getInt("carID"));
+            createdCar.setBrand(resultSet.getString("brand"));
+            createdCar.setModel(resultSet.getString("model"));
+            createdCar.setBuildYear(resultSet.getInt("buildyear"));
+            createdCar.setColor(resultSet.getString("color"));
+            createdCar.setPrice(resultSet.getString("price"));
+            createdCar.setDescription(resultSet.getString("description"));
+            createdCar.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate());
+            createdCar.setSalesmanID(resultSet.getInt("salesmanID"));
+            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Auto: " + createdCar + " wurde erfolgreich gespeichert.");
+            return createdCar;
         } else {
-            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "Cars-Objekt: " + car + " konnte nicht richtig gespeichert werden.");
+            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "Auto: " + car + " konnte nicht richtig gespeichert werden.");
             return null;
         }
     }
@@ -174,9 +177,10 @@ public class CarDAO extends AbstractDAO<Car> implements DAOInterface<Car> {
             dto.setDescription(resultSet.getString("description"));
             dto.setCreationDate(new java.sql.Date(resultSet.getDate("creationDate").getTime()).toLocalDate());
             dto.setSalesmanID(resultSet.getInt("salesmanID"));
-            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Cars-Objekt: " + dto + " wurde erfolgreich gespeichert.");
+            Logger.getLogger(CarDAO.class.getName()).log(Level.INFO, "Auto: " + dto + " wurde erfolgreich gespeichert.");
         } catch (SQLException e) {
-            Logger.getLogger(CarDAO.class.getName()).log(Level.SEVERE, "create(ResultSet resultSet) in CarsDAO failed", e);
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed", e);
         }
         return dto;
     }

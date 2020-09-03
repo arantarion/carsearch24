@@ -2,12 +2,13 @@ package org.bonn.se2.model.dao;
 
 import org.bonn.se2.model.objects.dto.Reservation;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
-import org.bonn.se2.process.control.exceptions.InvalidCredentialsException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -37,7 +38,7 @@ public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInter
     }
 
     @Override
-    public Reservation retrieve(int id) throws DatabaseException, InvalidCredentialsException {
+    public Reservation retrieve(int id) throws DatabaseException {
         //language=PostgreSQL
         final String sql =
                 "SELECT * FROM \"CarSearch24\".reservation " +
@@ -45,7 +46,8 @@ public class ReservationDAO extends AbstractDAO<Reservation> implements DAOInter
 
         List<Reservation> result = execute(sql);
         if (result.size() < 1) {
-            throw new InvalidCredentialsException();
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed");
         }
         return result.get(0);
     }

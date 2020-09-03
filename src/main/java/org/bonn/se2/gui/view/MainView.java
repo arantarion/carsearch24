@@ -8,9 +8,7 @@ import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteSuggestionProvider;
-import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
 import eu.maxschuster.vaadin.autocompletetextfield.provider.CollectionSuggestionProvider;
 import eu.maxschuster.vaadin.autocompletetextfield.provider.MatchMode;
 import eu.maxschuster.vaadin.autocompletetextfield.shared.ScrollBehavior;
@@ -29,6 +27,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 
 public class MainView extends VerticalLayout implements View {
 
+    // The car that is selected in the grid
     protected Car selectedCar = null;
 
     @Override
@@ -63,6 +64,7 @@ public class MainView extends VerticalLayout implements View {
 
     public void setUp() throws DatabaseException {
 
+        // custom style for background image
         addStyleName("background");
 
         HorizontalLayout horizontalLayout = new HorizontalLayout();
@@ -70,15 +72,6 @@ public class MainView extends VerticalLayout implements View {
         HorizontalLayout h2 = new HorizontalLayout();
 
         Button carCreation = new Button("Auto erstellen", VaadinIcons.CAR);
-
-        AutocompleteTextField autoSearchField = new AutocompleteTextField();
-        autoSearchField.setPlaceholder("Suchen...");
-        autoSearchField.addStyleName("inline-icon");
-        autoSearchField.setIcon(VaadinIcons.SEARCH);
-        autoSearchField.setWidth("600px");
-
-        Button deleteSearchButton = new Button("x");
-        deleteSearchButton.addStyleNames(ValoTheme.BUTTON_BORDERLESS, ValoTheme.BUTTON_TINY);
 
         addComponents(horizontalLayout, h2, horizontalLayoutCompany);
         setComponentAlignment(horizontalLayout, Alignment.TOP_RIGHT);
@@ -89,6 +82,7 @@ public class MainView extends VerticalLayout implements View {
         horizontalLayoutCompany.addComponent(fieldWithButton);
         horizontalLayoutCompany.addComponent(new Label("&nbsp", ContentMode.HTML));
 
+        // add the "Auto erstellen" Button if the user is a Salesman
         if (SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)) {
             horizontalLayoutCompany.addComponent(carCreation);
         }
@@ -98,12 +92,13 @@ public class MainView extends VerticalLayout implements View {
             UI.getCurrent().addWindow(create);
         });
 
+        // -----------------------------------------
+        // The grid that displays the search results
         Grid<Car> grid = new Grid<>();
         CarDAO carDAO = new CarDAO();
         List<Car> liste = carDAO.retrieveAll();
 
         grid.setSizeFull();
-
         grid.setHeightMode(HeightMode.UNDEFINED);
 
         grid.setItems(liste);
@@ -113,7 +108,9 @@ public class MainView extends VerticalLayout implements View {
         this.setComponentAlignment(grid, Alignment.MIDDLE_CENTER);
 
         Button reserveButton = new Button("Reservieren");
+        // make sure that the button is only enabled when a result is selected in the grid
         reserveButton.setEnabled(false);
+
         this.addComponent(reserveButton);
         this.setComponentAlignment(reserveButton, Alignment.MIDDLE_CENTER);
 
@@ -122,28 +119,31 @@ public class MainView extends VerticalLayout implements View {
             try {
                 create = new ReserveCarWindow(selectedCar);
             } catch (DatabaseException databaseException) {
-                databaseException.printStackTrace();
+                Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                        new Throwable().getStackTrace()[0].getMethodName() + " failed", databaseException);
             }
             UI.getCurrent().addWindow(create);
         });
 
-
+        // reduce the car object to its toString representation and split all at the space character
         Collection<String> suggestions = liste.stream()
-                .map(Car::toString)
-                .map(w -> w.split("\\s+"))
-                .flatMap(Arrays::stream)
-                .distinct()
-                .collect(Collectors.toList());
+                .map(Car::toString) // use toString representation
+                .map(w -> w.split("\\s+")) // split at space
+                .flatMap(Arrays::stream) // create only one list
+                .distinct() // use only distinct values. looks better
+                .collect(Collectors.toList()); // Collect to a list
 
+        // Set the suggestionprovider
         AutocompleteSuggestionProvider suggestionProvider = new CollectionSuggestionProvider(suggestions, MatchMode.BEGINS, true, Locale.GERMAN);
 
-        fieldWithButton.getTextField().setDelay(150);
+        fieldWithButton.getTextField().setDelay(150);           // after 150ms server responds with results
         fieldWithButton.getTextField().setItemAsHtml(false);
-        fieldWithButton.getTextField().setMinChars(3);
+        fieldWithButton.getTextField().setMinChars(3);          // user must specify at least 3 chars for results
         fieldWithButton.getTextField().setScrollBehavior(ScrollBehavior.NONE);
         fieldWithButton.getTextField().setSuggestionProvider(suggestionProvider);
 
         fieldWithButton.getTextField().addValueChangeListener(e -> {
+            // if user has inputted a search term
             if (!fieldWithButton.getTextField().getValue().equals("")) {
 
                 grid.removeAllColumns();
@@ -151,12 +151,13 @@ public class MainView extends VerticalLayout implements View {
                 List<Car> liste2 = null;
                 try {
                     liste2 = carDAO.retrieveCar(attr);
-                    liste2.forEach(System.out::println);
                 } catch (DatabaseException | SQLException databaseException) {
-                    databaseException.printStackTrace();
+                    Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                            new Throwable().getStackTrace()[0].getMethodName() + " failed", databaseException);
                 }
                 grid.setItems(liste2);
 
+                // if the field is empty -> display all cars in the database
             } else {
 
                 grid.removeAllColumns();
@@ -164,16 +165,19 @@ public class MainView extends VerticalLayout implements View {
                 try {
                     liste3 = carDAO.retrieveAll();
                 } catch (DatabaseException databaseException) {
-                    databaseException.printStackTrace();
+                    Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                            new Throwable().getStackTrace()[0].getMethodName() + " failed", databaseException);
                 }
                 grid.setItems(liste3);
             }
             addGridComponents(grid);
         });
 
+        // Get selected grid cell and activate the "Reservieren" button.
         grid.addSelectionListener(event -> {
             if (event.getFirstSelectedItem().isPresent()) {
                 selectedCar = (event.getFirstSelectedItem().get());
+                //Notification if salesman tries to select an item in the grid
                 if (SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)) {
                     Notification errNotification = new Notification("Nur Kunden können ein Auto reservieren", Notification.Type.ERROR_MESSAGE);
                     errNotification.setDelayMsec(3000);
@@ -188,6 +192,7 @@ public class MainView extends VerticalLayout implements View {
         });
     }
 
+    // Helper method to populate the grid
     private void addGridComponents(Grid<Car> grid) {
         grid.addColumn(Car::getBrand).setCaption("Marke");
         grid.addColumn(Car::getModel).setCaption("Modell");

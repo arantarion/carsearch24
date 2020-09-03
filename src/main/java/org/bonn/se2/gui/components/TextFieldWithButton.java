@@ -11,6 +11,7 @@ import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
  * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
  */
 
+// Custom component to have a autocomplete text field and also a delete button
 public class TextFieldWithButton extends CssLayout {
 
     private final AutocompleteTextField textField;
@@ -28,6 +29,7 @@ public class TextFieldWithButton extends CssLayout {
         button = new Button(VaadinIcons.CLOSE_SMALL);
         button.addStyleNames(ValoTheme.BUTTON_ICON_ONLY, ValoTheme.BUTTON_BORDERLESS);
 
+        //delete button
         button.addClickListener(e -> textField.setValue(""));
 
         addComponents(textField, button);

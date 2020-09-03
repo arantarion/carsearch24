@@ -41,9 +41,11 @@ public class NavigationBar extends HorizontalLayout {
 
         String userFirstName = SessionFunctions.getCurrentUser().getFirstName();
 
+        // If user is salesman
         if (SessionFunctions.getCurrentRole().equals(Config.Roles.SALESMAN)) {
             MenuBar.MenuItem userSiteButton = menuBar.addItem(userFirstName + "'s Autos", clickEvent -> UIFunctions.gotoUserPage());
             userSiteButton.setIcon(VaadinIcons.USER);
+            // If user is customer
         } else {
             MenuBar.MenuItem userSiteButton = menuBar.addItem(userFirstName + "'s Reservierungen", clickEvent -> UIFunctions.gotoUserPage());
             userSiteButton.setIcon(VaadinIcons.USER);

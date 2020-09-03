@@ -66,7 +66,7 @@ public class LoginView extends VerticalLayout implements View {
 
         final PasswordField passwd = new PasswordField();
         passwd.setCaption("Passwort:");
-        passwd.setPlaceholder("Passwort");
+        passwd.setPlaceholder("Passwort eingeben");
         passwd.setSizeFull();
 
         VerticalLayout layout = new VerticalLayout();
@@ -85,7 +85,6 @@ public class LoginView extends VerticalLayout implements View {
         layout.setComponentAlignment(userLogin, Alignment.MIDDLE_CENTER);
         layout.setComponentAlignment(passwd, Alignment.MIDDLE_CENTER);
         loginButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-
 
         Button registrierungsButton = new Button("Registrierung", VaadinIcons.ARROW_CIRCLE_RIGHT_O);
         layout.addComponent(registrierungsButton);

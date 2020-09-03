@@ -70,8 +70,8 @@ public class CustomerDAO extends AbstractDAO<Customer> implements DAOInterface<C
     }
 
     @Override
-    public Customer create(Customer Customer) throws DatabaseException, SQLException {
-        User user = new UserDAO().create(Customer);
+    public Customer create(Customer customer) throws DatabaseException, SQLException {
+        User user = new UserDAO().create(customer);
 
         //language=PostgreSQL
         final String query =
@@ -96,6 +96,7 @@ public class CustomerDAO extends AbstractDAO<Customer> implements DAOInterface<C
             Logger.getLogger(CustomerDAO.class.getName()).log(Level.INFO, "Der Customer : " + customer1 + " konnte erfolgreich gespeichert werden.");
             return customer1;
         } else {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.INFO, "Der Customer : " + customer + " konnte nicht erfolgreich gespeichert werden.");
             return null;
         }
     }
@@ -116,7 +117,8 @@ public class CustomerDAO extends AbstractDAO<Customer> implements DAOInterface<C
 
 
         } catch (SQLException | InvalidCredentialsException e) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, "create(ResultSet resultSet) in CustomerDAO failed");
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed", e);
             throw new DatabaseException("create(ResultSet resultSet) in CustomerDAO failed");
         }
 
@@ -125,19 +127,20 @@ public class CustomerDAO extends AbstractDAO<Customer> implements DAOInterface<C
     }
 
     @Override
-    public Customer delete(Customer Customer) throws DatabaseException {
+    public Customer delete(Customer customer) throws DatabaseException {
         //language=PostgreSQL
         final String deleteQuery =
                 "DELETE FROM \"CarSearch24\".user " +
                         "WHERE \"userID\" = ? " +
                         "RETURNING *;";
 
-        List<Customer> result = executePrepared(deleteQuery, Customer.getCustomerID());
+        List<Customer> result = executePrepared(deleteQuery, customer.getCustomerID());
         if (result.size() < 1) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, "delete(Customer Customer) in CustomerDAO failed");
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed");
             throw new DatabaseException("delete(Customer Customer) failed");
         }
-        Logger.getLogger(CustomerDAO.class.getName()).log(Level.INFO, "Customer: " + Customer + " wurde erfolgreich gelöscht.");
+        Logger.getLogger(CustomerDAO.class.getName()).log(Level.INFO, "Customer: " + customer + " wurde erfolgreich gelöscht.");
         return result.get(0);
     }
 
@@ -150,7 +153,8 @@ public class CustomerDAO extends AbstractDAO<Customer> implements DAOInterface<C
 
         List<Customer> result = executePrepared(deleteQuery, id);
         if (result.size() < 1) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, "delete(int ID) in CustomerDAO failed");
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed");
             throw new DatabaseException("delete(int ID) failed");
         }
         Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, "Customer mit der ID: " + id + " wurde erfolgreich gelöscht.");

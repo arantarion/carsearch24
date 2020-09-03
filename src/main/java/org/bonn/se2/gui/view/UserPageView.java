@@ -34,6 +34,7 @@ import java.util.logging.Logger;
 
 public class UserPageView extends VerticalLayout implements View {
 
+    // Selected car in grid
     protected Car selectedCar = null;
 
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -44,7 +45,8 @@ public class UserPageView extends VerticalLayout implements View {
             try {
                 this.setUp();
             } catch (DatabaseException | InvalidCredentialsException | SQLException e) {
-                e.printStackTrace();
+                Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                        new Throwable().getStackTrace()[0].getMethodName() + " failed", e);
             }
         }
     }
@@ -64,9 +66,7 @@ public class UserPageView extends VerticalLayout implements View {
         deleteButton.setEnabled(false);
         deleteButton.addStyleName("danger");
 
-        Button backButton = new Button("Zurück", e -> {
-            UIFunctions.gotoMain();
-        });
+        Button backButton = new Button("Zurück", e -> UIFunctions.gotoMain());
         backButton.setIcon(VaadinIcons.ARROW_LEFT);
 
         VerticalLayout spacer = new VerticalLayout();
@@ -74,12 +74,13 @@ public class UserPageView extends VerticalLayout implements View {
         spaceButton.setStyleName(ValoTheme.BUTTON_BORDERLESS);
         spacer.addComponents(spaceButton, spaceButton, spaceButton, spaceButton);
 
-
         if (SessionFunctions.getCurrentRole().equals(Config.Roles.CUSTOMER)) {
 
+            // Get current customer as object
             CustomerDAO customerDAO = new CustomerDAO();
             Customer customer = customerDAO.retrieve(user.getUserID());
 
+            // get the reservation ids to the current customer
             ReservationDAO reservationDAO = new ReservationDAO();
             List<Integer> resIDs = reservationDAO.retrieveReservationsByCustomerID(customer.getCustomerID());
 
@@ -94,6 +95,7 @@ public class UserPageView extends VerticalLayout implements View {
 
                 CarDAO carDAO = new CarDAO();
 
+                // add all the reserved cars of a user to the list
                 for (int id : resIDs) {
                     reservedCars.add(carDAO.retrieve(id));
                 }
@@ -117,10 +119,11 @@ public class UserPageView extends VerticalLayout implements View {
                         successNotification.setPosition(Position.MIDDLE_CENTER);
                         successNotification.setDelayMsec(3000);
                         successNotification.show(Page.getCurrent());
-                        UIFunctions.gotoUserPage();
+                        UIFunctions.gotoUserPage(); // refresh the page
 
                     } catch (DatabaseException databaseException) {
-                        Logger.getLogger(UserPageView.class.getName()).log(Level.INFO, "Konnte die Reservierung für " + selectedCar + " nicht löschen");
+                        Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                                new Throwable().getStackTrace()[0].getMethodName() + " failed", databaseException);
                     }
                 });
 
@@ -137,6 +140,8 @@ public class UserPageView extends VerticalLayout implements View {
 
 
             } else {
+
+                // in case the user has no reservations
                 Label errNotice = new Label("<h2>Sie haben noch keine Reservierungen gemacht. <br>Sie können auf der Startseite nach Autos suchen und diese für einen Termin reservieren</h2>", ContentMode.HTML);
                 errNotice.setStyleName(ValoTheme.LABEL_FAILURE);
 
@@ -157,6 +162,7 @@ public class UserPageView extends VerticalLayout implements View {
             gridCars.setHeightMode(HeightMode.UNDEFINED);
             gridCars.setSelectionMode(Grid.SelectionMode.SINGLE);
 
+            // get the list of cars that belong to the salesman
             CarDAO carDAO = new CarDAO();
             List<Car> liste = carDAO.retrieveCarBySalesman(salesman.getSalesmanID());
 

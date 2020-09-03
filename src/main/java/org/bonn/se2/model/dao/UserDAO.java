@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Henry Weckermann, Anton Drees
@@ -35,7 +37,7 @@ public class UserDAO extends AbstractDAO<User> implements DAOInterface<User> {
     }
 
     @Override
-    public User retrieve(String attribute) throws DatabaseException, InvalidCredentialsException {
+    public User retrieve(String attribute) throws DatabaseException {
         //language=PostgreSQL
         String sql =
                 "SELECT * FROM \"CarSearch24\".user " +
@@ -43,7 +45,8 @@ public class UserDAO extends AbstractDAO<User> implements DAOInterface<User> {
 
         List<User> result = execute(sql);
         if (result.size() < 1) {
-            throw new InvalidCredentialsException();
+            Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                    new Throwable().getStackTrace()[0].getMethodName() + " failed");
         }
         return result.get(0);
     }

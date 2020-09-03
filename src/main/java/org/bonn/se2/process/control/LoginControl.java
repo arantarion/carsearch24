@@ -52,7 +52,8 @@ public class LoginControl {
                 new SalesmanDAO().retrieve(user.getUserID());
                 return Config.Roles.SALESMAN;
             } catch (DatabaseException ex) {
-                Logger.getLogger(LoginControl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginControl.class.getSimpleName()).log(Level.SEVERE,
+                        new Throwable().getStackTrace()[0].getMethodName() + " failed", e);
                 return null;
             }
         }

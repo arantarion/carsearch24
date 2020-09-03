@@ -9,6 +9,9 @@ import org.bonn.se2.model.objects.dto.Reservation;
 import org.bonn.se2.process.control.exceptions.DatabaseException;
 import org.bonn.se2.services.util.SessionFunctions;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Anton Drees
  * Hausarbeit im Rahmen von Software Engineering 2 bei Prof. Dr. Sasha Alda
@@ -44,7 +47,6 @@ public class ReserveCarWindow extends Window {
         price.setSizeFull();
 
         reservationLayout.addComponents(title, brand, model, buildYear, color, price);
-
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
         Button yes = new Button("JA");
@@ -83,7 +85,8 @@ public class ReserveCarWindow extends Window {
                 reservationDAO.create(reservation);
                 close();
             } catch (DatabaseException databaseException) {
-                databaseException.printStackTrace();
+                Logger.getLogger(this.getClass().getSimpleName()).log(Level.SEVERE,
+                        new Throwable().getStackTrace()[0].getMethodName() + " failed", databaseException);
             }
         });
 
