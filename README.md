@@ -1,52 +1,25 @@
 CarSearch24
 ==============
 
-Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
+Eine Hausarbeit für Software Engineering 2 bei Prof. Dr. Sasha Alda im Sommersemester 2020. 
+
+<br>
+<h3>Motivation und Ziel</h3>
+
+"Das Unternehmen CarLook Ltd. möchte eine Suchplattform haben, mit der registrierte 
+Endkunden nach Autos aus dem Fuhrpark des Unternehmens suchen können. Die pro-
+totypische Implementierung muss dabei für eine optimale, sehr gute Lösung auf Basis 
+des Web-Frameworks Vaadin sowie auf der Grundlage der Methoden aus den Vorlesun-
+gen Software Engineering 1 und 2 erfolgen. 
+
+ 
+
+Nach Abstimmung mit dem Kunden kann für eine erste befriedigende Lösung anstelle 
+einer prototypischen Implementierung auch ein Mock-Up eines Prototyps entwickelt wer-
+den, der eine Implementierung ersetzt."
 
 
-Workflow
-========
-
-To compile the entire project, run "mvn install".
-
-To run the application, run "mvn jetty:run" and open http://localhost:8080/ .
-
-To produce a deployable production mode WAR:
-- change productionMode to true in the servlet class configuration (nested in the UI class)
-- run "mvn clean package"
-- test the war file with "mvn jetty:run-war"
-
-Client-Side compilation
--------------------------
-
-The generated maven project is using an automatically generated widgetset by default. 
-When you add a dependency that needs client-side compilation, the maven plugin will 
-automatically generate it for you. Your own client-side customizations can be added into
-package "client".
-
-Debugging client side code
-  - run "mvn vaadin:run-codeserver" on a separate console while the application is running
-  - activate Super Dev Mode in the debug window of the application
-
-Developing a theme using the runtime compiler
--------------------------
-
-When developing the theme, Vaadin can be configured to compile the SASS based
-theme at runtime in the server. This way you can just modify the scss files in
-your IDE and reload the browser to see changes.
-
-To use the runtime compilation, open pom.xml and comment out the compile-theme 
-goal from vaadin-maven-plugin configuration. To remove a possibly existing 
-pre-compiled theme, run "mvn clean package" once.
-
-When using the runtime compiler, running the application in the "run" mode 
-(rather than in "debug" mode) can speed up consecutive theme compilations
-significantly.
-
-It is highly recommended to disable runtime compilation for production WAR files.
-
-Using Vaadin pre-releases
--------------------------
-
-If Vaadin pre-releases are not enabled by default, use the Maven parameter
-"-P vaadin-prerelease" or change the activation default value of the profile in pom.xml .
+<br>
+<h3>Team</h3>
+Anton Drees - anton.drees@smail.inf.h-brs.de<br>
+Henry Weckermann - henry.weckermann@smail.inf.h-brs.de
